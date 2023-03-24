@@ -9,7 +9,7 @@ import java.util.Map;
 public interface ArticleService {
 
     void writeArticle(ArticleDto articleDto) throws Exception;
-    List<ArticleDto> listArticle(Map<String, String> map) throws Exception;
+    List<ArticleDto> listArticle() throws Exception;
     PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
     ArticleDto getArticle(int id) throws Exception;
     void updateHit(int id) throws Exception;

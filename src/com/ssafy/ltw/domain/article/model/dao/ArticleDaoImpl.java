@@ -39,7 +39,7 @@ public class ArticleDaoImpl implements ArticleDao {
             sql.append("values (?, ?, ?)");
 
             pstmt = conn.prepareStatement(sql.toString());
-            pstmt.setInt(1, articleDto.getMemberId());
+            pstmt.setLong(1, articleDto.getMemberId());
             pstmt.setString(2, articleDto.getSubject());
             pstmt.setString(3, articleDto.getContent());
 
@@ -51,7 +51,7 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Override
-    public List<ArticleDto> listArticle(Map<String, Object> param) throws SQLException {
+    public List<ArticleDto> listArticle() throws SQLException {
         List<ArticleDto> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -65,21 +65,16 @@ public class ArticleDaoImpl implements ArticleDao {
             rs = pstmt.executeQuery();
 
             while(rs.next()) {
-                ArticleDto articleDto = new ArticleDto().builder()
-                        .subject("test")
-                        .content("testContente")
-                        .memberId(1)
-                        .build();
                 ArticleDto findArticleDto = new ArticleDto().builder()
                         .id(rs.getLong("id"))
                         .createdDate(rs.getString("created_date"))
                         .modifiedDate(rs.getString("modified_date"))
-                        .subject(rs.getString())
-                productDto = new ArticleDto();
-                productDto.setCode(rs.getString("code"));
-                productDto.setModel(rs.getString("model"));
-                productDto.setPrice(rs.getInt("price"));
-                list.add(productDto);
+                        .subject(rs.getString("subject"))
+                        .content(rs.getString("content"))
+                        .hit(rs.getInt("hit"))
+                        .memberId(rs.getLong("member_id"))
+                        .build();
+                list.add(findArticleDto);
             }
         } finally {
             dbUtil.close(rs, pstmt, conn);
@@ -94,30 +89,36 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public ArticleDto getArticle(int id) throws SQLException {
-        ProductDto productDto = null;
+        ArticleDto findArticleDto = null;
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = dbUtil.getConnection();
             StringBuilder sql = new StringBuilder();
-            sql.append("select code, model, price \n");
-            sql.append("from product \n");
-            sql.append("where article_no = ?");
+            sql.append("select *\n");
+            sql.append("from article \n");
+            sql.append("where id = ?");
             pstmt = conn.prepareStatement(sql.toString());
-            pstmt.setString(1, code);
+            pstmt.setLong(1, id);
             rs = pstmt.executeQuery();
+            System.out.println("qw");
             if(rs.next()) {
-                productDto = new ProductDto();
-                productDto.setCode(rs.getString("code"));
-                productDto.setModel(rs.getString("model"));
-                productDto.setPrice(rs.getInt("price"));
-
+                System.out.println("ho");
+                findArticleDto = new ArticleDto().builder()
+                        .id(rs.getLong("id"))
+                        .createdDate(rs.getString("created_date"))
+                        .modifiedDate(rs.getString("modified_date"))
+                        .subject(rs.getString("subject"))
+                        .content(rs.getString("content"))
+                        .hit(rs.getInt("hit"))
+                        .memberId(rs.getLong("member_id"))
+                        .build();
             }
         } finally {
             dbUtil.close(rs, pstmt, conn);
         }
-        return productDto;
+        return findArticleDto;
     }
 
     @Override

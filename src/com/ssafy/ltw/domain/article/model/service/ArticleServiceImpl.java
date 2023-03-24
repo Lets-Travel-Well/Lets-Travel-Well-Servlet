@@ -27,8 +27,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleDto> listArticle(Map<String, String> map) throws Exception {
-        return null;
+    public List<ArticleDto> listArticle() throws Exception {
+        return articleDao.listArticle();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDto getArticle(int id) throws Exception {
-        return null;
+        return articleDao.getArticle(id);
     }
 
     @Override

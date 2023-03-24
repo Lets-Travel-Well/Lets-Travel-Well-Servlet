@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface ArticleDao {
     void writeArticle(ArticleDto articleDto) throws SQLException;
-    List<ArticleDto> listArticle(Map<String, Object> param) throws SQLException;
+    List<ArticleDto> listArticle() throws SQLException;
     int getTotalArticleCount(Map<String, Object> param) throws SQLException;
     ArticleDto getArticle(int id) throws SQLException;
     void updateHit(int id) throws SQLException;

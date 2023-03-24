@@ -15,7 +15,7 @@ public class ArticleDto {
     private String subject;
     private String content;
     // 조회수 
-    private String hit;
+    private int hit;
     // TODO : 좋아요 기능 추가 구현
-    private int memberId;
+    private long memberId;
 }
