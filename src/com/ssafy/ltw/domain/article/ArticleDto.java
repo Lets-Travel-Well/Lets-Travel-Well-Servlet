@@ -1,12 +1,13 @@
 package com.ssafy.ltw.domain.article;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Setter
 @Getter
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ArticleDto {
     private int id;
     private String createDate;
