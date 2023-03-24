@@ -10,8 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 public class ArticleDto {
     private int id;
-    private String createDate;
-    private String modifyDate;
+    private String createdDate;
+    private String modifiedDate;
     private String subject;
     private String content;
     // 조회수 
