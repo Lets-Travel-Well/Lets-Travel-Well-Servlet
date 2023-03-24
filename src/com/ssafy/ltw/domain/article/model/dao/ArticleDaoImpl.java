@@ -5,7 +5,9 @@ import com.ssafy.ltw.global.util.DBUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +52,39 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public List<ArticleDto> listArticle(Map<String, Object> param) throws SQLException {
-        return null;
+        List<ArticleDto> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("select * \n");
+            sql.append("from article \n");
+            pstmt = conn.prepareStatement(sql.toString());
+            rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                ArticleDto articleDto = new ArticleDto().builder()
+                        .subject("test")
+                        .content("testContente")
+                        .memberId(1)
+                        .build();
+                ArticleDto findArticleDto = new ArticleDto().builder()
+                        .id(rs.getLong("id"))
+                        .createdDate(rs.getString("created_date"))
+                        .modifiedDate(rs.getString("modified_date"))
+                        .subject(rs.getString())
+                productDto = new ArticleDto();
+                productDto.setCode(rs.getString("code"));
+                productDto.setModel(rs.getString("model"));
+                productDto.setPrice(rs.getInt("price"));
+                list.add(productDto);
+            }
+        } finally {
+            dbUtil.close(rs, pstmt, conn);
+        }
+        return list;
     }
 
     @Override
@@ -60,7 +94,30 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public ArticleDto getArticle(int id) throws SQLException {
-        return null;
+        ProductDto productDto = null;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("select code, model, price \n");
+            sql.append("from product \n");
+            sql.append("where article_no = ?");
+            pstmt = conn.prepareStatement(sql.toString());
+            pstmt.setString(1, code);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                productDto = new ProductDto();
+                productDto.setCode(rs.getString("code"));
+                productDto.setModel(rs.getString("model"));
+                productDto.setPrice(rs.getInt("price"));
+
+            }
+        } finally {
+            dbUtil.close(rs, pstmt, conn);
+        }
+        return productDto;
     }
 
     @Override
