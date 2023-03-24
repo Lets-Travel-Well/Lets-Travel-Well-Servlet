@@ -17,6 +17,10 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleServiceImpl() {
         articleDao = ArticleDaoImpl.getArticleDao();
     }
+
+    public static ArticleService getArticleService() {
+        return articleService;
+    }
     @Override
     public void writeArticle(ArticleDto articleDto) throws Exception {
 
