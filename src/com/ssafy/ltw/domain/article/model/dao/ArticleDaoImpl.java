@@ -49,7 +49,37 @@ public class ArticleDaoImpl implements ArticleDao {
         }
 
     }
-
+    @Override
+    public ArticleDto getArticle(Long id) throws SQLException {
+        ArticleDto findArticleDto = null;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("select *\n");
+            sql.append("from article \n");
+            sql.append("where id = ?");
+            pstmt = conn.prepareStatement(sql.toString());
+            pstmt.setLong(1, id);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                findArticleDto = new ArticleDto().builder()
+                        .id(rs.getLong("id"))
+                        .createdDate(rs.getString("created_date"))
+                        .modifiedDate(rs.getString("modified_date"))
+                        .subject(rs.getString("subject"))
+                        .content(rs.getString("content"))
+                        .hit(rs.getInt("hit"))
+                        .memberId(rs.getLong("member_id"))
+                        .build();
+            }
+        } finally {
+            dbUtil.close(rs, pstmt, conn);
+        }
+        return findArticleDto;
+    }
     @Override
     public List<ArticleDto> listArticle() throws SQLException {
         List<ArticleDto> list = new ArrayList<>();
@@ -81,58 +111,54 @@ public class ArticleDaoImpl implements ArticleDao {
         }
         return list;
     }
+    @Override
+    public void updateHit(Long id) throws SQLException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("update article \n");
+            sql.append("set hit = hit + 1 \n");
+            sql.append("where id = ?");
+            pstmt = conn.prepareStatement(sql.toString());
+            pstmt.setLong(1, id);
+            pstmt.executeUpdate();
+        } finally {
+            dbUtil.close(pstmt, conn);
+        }
+    }
 
     @Override
     public int getTotalArticleCount(Map<String, Object> param) throws SQLException {
         return 0;
     }
 
-    @Override
-    public ArticleDto getArticle(int id) throws SQLException {
-        ArticleDto findArticleDto = null;
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        try {
-            conn = dbUtil.getConnection();
-            StringBuilder sql = new StringBuilder();
-            sql.append("select *\n");
-            sql.append("from article \n");
-            sql.append("where id = ?");
-            pstmt = conn.prepareStatement(sql.toString());
-            pstmt.setLong(1, id);
-            rs = pstmt.executeQuery();
-            System.out.println("qw");
-            if(rs.next()) {
-                System.out.println("ho");
-                findArticleDto = new ArticleDto().builder()
-                        .id(rs.getLong("id"))
-                        .createdDate(rs.getString("created_date"))
-                        .modifiedDate(rs.getString("modified_date"))
-                        .subject(rs.getString("subject"))
-                        .content(rs.getString("content"))
-                        .hit(rs.getInt("hit"))
-                        .memberId(rs.getLong("member_id"))
-                        .build();
-            }
-        } finally {
-            dbUtil.close(rs, pstmt, conn);
-        }
-        return findArticleDto;
-    }
 
-    @Override
-    public void updateHit(int id) throws SQLException {
 
-    }
 
     @Override
     public void modifyArticle(ArticleDto articleDto) throws SQLException {
-
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("update article \n");
+            sql.append("set subject=?, content=? \n");
+            sql.append("where id = ?");
+            pstmt = conn.prepareStatement(sql.toString());
+            pstmt.setString(1, articleDto.getSubject());
+            pstmt.setString(2, articleDto.getContent());
+            pstmt.setLong(3, articleDto.getId());
+            pstmt.executeUpdate();
+        } finally {
+            dbUtil.close(pstmt, conn);
+        }
     }
 
     @Override
-    public void deleteArticle(int id) throws SQLException {
+    public void deleteArticle(Long id) throws SQLException {
 
     }
 }

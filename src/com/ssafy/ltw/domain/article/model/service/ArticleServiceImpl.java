@@ -37,22 +37,23 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleDto getArticle(int id) throws Exception {
+    public ArticleDto getArticle(long id) throws Exception {
+        updateHit(id);
         return articleDao.getArticle(id);
     }
 
     @Override
-    public void updateHit(int id) throws Exception {
-
+    public void updateHit(long id) throws Exception {
+        articleDao.updateHit(id);
     }
 
     @Override
     public void modifyArticle(ArticleDto articleDto) throws Exception {
-
+        articleDao.modifyArticle(articleDto);
     }
 
     @Override
-    public void deleteArticle(int id) throws Exception {
+    public void deleteArticle(long id) throws Exception {
 
     }
 }

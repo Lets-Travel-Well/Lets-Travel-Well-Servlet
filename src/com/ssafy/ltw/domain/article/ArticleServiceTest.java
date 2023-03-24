@@ -24,9 +24,22 @@ public class ArticleServiceTest {
 
         // getArticleTest
         List<ArticleDto> articles = articleService.listArticle();
-        
+
+        // updateHit
         for(ArticleDto articleDto1 : articles){
             System.out.println(articleDto1);
         }
+        articleService.updateHit(1L);
+
+        // ModifyArticle
+        ArticleDto articleDt02 = new ArticleDto().builder()
+                .id(1L)
+                .subject("modify123123")
+                .content("modifyContetnt@@@@@123123")
+                .build();
+        articleService.modifyArticle(articleDt02);
+
+        ArticleDto modifyArticleDto = articleService.getArticle(1);
+        System.out.println(modifyArticleDto.toString());
     }
 }

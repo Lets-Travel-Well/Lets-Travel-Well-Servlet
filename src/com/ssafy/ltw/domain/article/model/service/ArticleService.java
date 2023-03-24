@@ -11,10 +11,10 @@ public interface ArticleService {
     void writeArticle(ArticleDto articleDto) throws Exception;
     List<ArticleDto> listArticle() throws Exception;
     PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
-    ArticleDto getArticle(int id) throws Exception;
-    void updateHit(int id) throws Exception;
+    ArticleDto getArticle(long id) throws Exception;
+    void updateHit(long id) throws Exception;
 
     void modifyArticle(ArticleDto articleDto) throws Exception;
-    void deleteArticle(int id) throws Exception;
+    void deleteArticle(long id) throws Exception;
 
 }
