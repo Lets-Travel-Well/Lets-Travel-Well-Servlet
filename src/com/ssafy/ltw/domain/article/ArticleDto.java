@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ArticleDto {
-    private int id;
+    private long id;
     private String createdDate;
     private String modifiedDate;
     private String subject;
