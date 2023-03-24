@@ -11,16 +11,16 @@ public class ArticleServiceTest {
         ArticleService articleService = ArticleServiceImpl.getArticleService();
 
         // WriteTest
-//        ArticleDto articleDto = new ArticleDto().builder()
-//                .subject("test")
-//                .content("testContente")
-//                .memberId(1)
-//                .build();
-//        articleService.writeArticle(articleDto);
+        ArticleDto articleDto = new ArticleDto().builder()
+                .subject("test")
+                .content("testContente")
+                .memberId(1)
+                .build();
+        articleService.writeArticle(articleDto);
 
         // getArticleTest
-        ArticleDto articleDto = articleService.getArticle(1);
-        System.out.println(articleDto.toString());
+        ArticleDto findArticleDto = articleService.getArticle(1L);
+        System.out.println(findArticleDto.toString());
 
         // getArticleTest
         List<ArticleDto> articles = articleService.listArticle();
@@ -39,7 +39,9 @@ public class ArticleServiceTest {
                 .build();
         articleService.modifyArticle(articleDt02);
 
-        ArticleDto modifyArticleDto = articleService.getArticle(1);
+        ArticleDto modifyArticleDto = articleService.getArticle(1L);
         System.out.println(modifyArticleDto.toString());
+
+        articleService.deleteArticle(1L);
     }
 }

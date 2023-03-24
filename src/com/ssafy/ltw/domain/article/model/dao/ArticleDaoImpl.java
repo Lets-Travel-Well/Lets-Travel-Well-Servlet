@@ -130,14 +130,6 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Override
-    public int getTotalArticleCount(Map<String, Object> param) throws SQLException {
-        return 0;
-    }
-
-
-
-
-    @Override
     public void modifyArticle(ArticleDto articleDto) throws SQLException {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -159,6 +151,22 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public void deleteArticle(Long id) throws SQLException {
-
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("delete from article \n");
+            sql.append("where id = ?");
+            pstmt = conn.prepareStatement(sql.toString());
+            pstmt.setLong(1, id);
+            pstmt.executeUpdate();
+        } finally {
+            dbUtil.close(pstmt, conn);
+        }
+    }
+    @Override
+    public int getTotalArticleCount(Map<String, Object> param) throws SQLException {
+        return 0;
     }
 }

@@ -37,13 +37,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleDto getArticle(long id) throws Exception {
+    public ArticleDto getArticle(Long id) throws Exception {
         updateHit(id);
         return articleDao.getArticle(id);
     }
 
     @Override
-    public void updateHit(long id) throws Exception {
+    public void updateHit(Long id) throws Exception {
         articleDao.updateHit(id);
     }
 
@@ -53,7 +53,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void deleteArticle(long id) throws Exception {
-
+    public void deleteArticle(Long id) throws Exception {
+        articleDao.deleteArticle(id);
     }
 }
