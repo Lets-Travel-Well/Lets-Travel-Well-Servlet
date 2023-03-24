@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+// TODO : 유저 구현되면 바꿔야함 현재 MEMBER_ID 다 -1로 넣어둘 예정
 public class ArticleDaoImpl implements ArticleDao {
 
     private static ArticleDao articleDao;
@@ -34,7 +35,11 @@ public class ArticleDaoImpl implements ArticleDao {
             StringBuilder sql = new StringBuilder();
             sql.append("insert into board (user_id, subject, content) \n");
             sql.append("values (?, ?, ?)");
+
             pstmt = conn.prepareStatement(sql.toString());
+            pstmt.setInt(1, articleDto.getMemberId());
+            pstmt.setString(2, articleDto.getSubject());
+            pstmt.setString(3, articleDto.getContent());
 
             pstmt.executeUpdate();
         } finally {
