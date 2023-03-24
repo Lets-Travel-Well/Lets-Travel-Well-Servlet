@@ -33,7 +33,7 @@ public class ArticleDaoImpl implements ArticleDao {
         try {
             conn = dbUtil.getConnection();
             StringBuilder sql = new StringBuilder();
-            sql.append("insert into board (user_id, subject, content) \n");
+            sql.append("insert into article (member_id, subject, content) \n");
             sql.append("values (?, ?, ?)");
 
             pstmt = conn.prepareStatement(sql.toString());
