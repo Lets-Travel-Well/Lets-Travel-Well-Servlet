@@ -1,8 +1,12 @@
 package com.ssafy.ltw.domain.article.controller;
 
+import com.ssafy.ltw.domain.article.model.Article;
+import com.ssafy.ltw.domain.article.model.dto.ArticleDto;
 import com.ssafy.ltw.domain.article.model.service.ArticleService;
 import com.ssafy.ltw.domain.article.model.service.ArticleServiceImpl;
-import com.ssafy.ltw.domain.member.model.MemberDto;
+import com.ssafy.ltw.domain.member.model.Member;
+import com.ssafy.ltw.domain.member.model.service.MemberService;
+import com.ssafy.ltw.domain.member.model.service.MemberServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -13,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/article")
@@ -20,11 +25,13 @@ public class ArticleController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private ArticleService articleService;
+    private MemberService memberService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         articleService = ArticleServiceImpl.getArticleService();
+        memberService = MemberServiceImpl.getMemberService();
     }
 
     @Override
@@ -64,21 +71,27 @@ public class ArticleController extends HttpServlet {
         doGet(request, response);
     }
     private String list(HttpServletRequest request, HttpServletResponse response) {
-//        HttpSession session = request.getSession();
-//        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//        if (memberDto != null) {
-//            try {
-//                List<ArticleDto> list = boardService.listArticle();
-//                request.setAttribute("articles", list);
-//
-//                return "/board/list.jsp";
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                return "/index.jsp";
-//            }
-//        } else
-//            return "/user/login.jsp";
-        return null;
+        System.out.println("list");
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("userinfo");
+        if (member != null) {
+            try {
+                List<Article> articles = articleService.listArticle();
+                List<ArticleDto> list = new ArrayList<>();
+                for(Article article : articles){
+                    Member findMember = memberService.findUserNameById(article.getMemberId());
+                    // TODO : 유니크한 키값도 같이 가져와야함..
+                    ArticleDto articleDto = new ArticleDto(article, findMember.getUsername());
+                    list.add(articleDto);
+                }
+                request.setAttribute("articles", list);
+                return "/article/list.jsp";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "/index.jsp";
+            }
+        } else
+            return "/member/login.jsp";
     }
 
     private String view(HttpServletRequest request, HttpServletResponse response) {

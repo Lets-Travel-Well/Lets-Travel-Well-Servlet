@@ -1,6 +1,6 @@
 package com.ssafy.ltw.domain.member.model.service;
 
-import com.ssafy.ltw.domain.member.model.MemberDto;
+import com.ssafy.ltw.domain.member.model.Member;
 import com.ssafy.ltw.domain.member.model.dao.MemberDao;
 import com.ssafy.ltw.domain.member.model.dao.MemberDaoImpl;
 
@@ -23,15 +23,17 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public int joinMember(MemberDto memberDto) throws Exception {
-		return memberDao.joinMember(memberDto);
+	public int joinMember(Member member) throws Exception {
+		return memberDao.joinMember(member);
 	}
 	@Override
-	public MemberDto loginMember(String loginId, String loginPw) throws Exception {
+	public Member loginMember(String loginId, String loginPw) throws Exception {
 		return memberDao.loginMember(loginId, loginPw);
 	}
 
-
-
+	@Override
+	public Member findUserNameById(Long id) throws Exception {
+		return memberDao.findUserNameById(id);
+	}
 
 }

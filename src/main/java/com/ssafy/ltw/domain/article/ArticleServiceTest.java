@@ -1,5 +1,6 @@
 package com.ssafy.ltw.domain.article;
 
+import com.ssafy.ltw.domain.article.model.Article;
 import com.ssafy.ltw.domain.article.model.service.ArticleService;
 import com.ssafy.ltw.domain.article.model.service.ArticleServiceImpl;
 
@@ -9,12 +10,12 @@ public class ArticleServiceTest {
         ArticleService articleService = ArticleServiceImpl.getArticleService();
 
         // WriteTest
-        ArticleDto articleDto = new ArticleDto().builder()
+        Article article = new Article().builder()
                 .subject("test")
                 .content("testContente")
                 .memberId(1)
                 .build();
-        articleService.writeArticle(articleDto);
+        articleService.writeArticle(article);
 
 //        // getArticleTest
 //        ArticleDto findArticleDto = articleService.getArticle(1L);

@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.ssafy.ltw.domain.member.model.MemberDto;
+import com.ssafy.ltw.domain.member.model.Member;
 import com.ssafy.ltw.global.util.db.DBUtil;
 
 public class MemberDaoImpl implements MemberDao{
@@ -26,7 +26,7 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public int idCheck(String userId) throws SQLException {
-		MemberDto memberDto = null;
+		Member member = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -49,7 +49,7 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
-	public int joinMember(MemberDto memberDto) throws SQLException {
+	public int joinMember(Member member) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -59,11 +59,11 @@ public class MemberDaoImpl implements MemberDao{
 			join.append("values (?, ?, ?, ?, ?)");
 			
 			pstmt = conn.prepareStatement(join.toString());
-			pstmt.setString(1, memberDto.getLoginId());
-			pstmt.setString(2, memberDto.getLoginPw());
-			pstmt.setString(3, memberDto.getUsername());
-			pstmt.setString(4, memberDto.getEmail());
-			pstmt.setString(5, memberDto.getPhone());
+			pstmt.setString(1, member.getLoginId());
+			pstmt.setString(2, member.getLoginPw());
+			pstmt.setString(3, member.getUsername());
+			pstmt.setString(4, member.getEmail());
+			pstmt.setString(5, member.getPhone());
 			
 			return pstmt.executeUpdate();
 		} finally {
@@ -72,8 +72,8 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
-	public MemberDto loginMember(String userId, String userPw) throws SQLException {
-		MemberDto memberDto = null;
+	public Member loginMember(String userId, String userPw) throws SQLException {
+		Member member = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -88,13 +88,49 @@ public class MemberDaoImpl implements MemberDao{
 			pstmt.setString(2, userPw);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				memberDto = new MemberDto();
-				memberDto.setLoginId(rs.getString("login_id"));
-				memberDto.setUsername(rs.getString("username"));
+				member = new Member();
+				member.setLoginId(rs.getString("login_id"));
+				member.setUsername(rs.getString("username"));
 			}
 		} finally {
 			dbUtil.close(rs, pstmt, conn);
 		}
-		return memberDto;
+		return member;
+	}
+
+	@Override
+	public Member findUserNameById(Long id) throws SQLException {
+		Member member = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = dbUtil.getConnection();
+			StringBuilder loginMember = new StringBuilder();
+			loginMember.append("select * \n");
+			loginMember.append("from member \n");
+			loginMember.append("where id = ?\n");/*
+			/*
+			select username
+			from member
+			where id = 1;
+			*/
+			pstmt = conn.prepareStatement(loginMember.toString());
+			pstmt.setLong(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				member = new Member().builder()
+						.id(id)
+						.loginId(rs.getString("login_id"))
+						.loginPw(rs.getString("login_pw"))
+						.username(rs.getString("username"))
+						.email(rs.getString("email"))
+						.phone(rs.getString("phone"))
+						.build();
+			}
+		} finally {
+			dbUtil.close(rs, pstmt, conn);
+		}
+		return member;
 	}
 }

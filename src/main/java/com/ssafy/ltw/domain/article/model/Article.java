@@ -1,4 +1,4 @@
-package com.ssafy.ltw.domain.article;
+package com.ssafy.ltw.domain.article.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArticleDto {
+public class Article {
     private Long id;
     private String createdDate;
     private String modifiedDate;
@@ -23,9 +23,4 @@ public class ArticleDto {
     private int hit;
     // TODO : 좋아요 기능 추가 구현
     private long memberId;
-
-	
-	
-    
-    
 }
