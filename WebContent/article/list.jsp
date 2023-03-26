@@ -156,6 +156,10 @@
             location.href = "${root}/article?action=view&articleId=" + this.getAttribute("data-no");
         });
     });
+
+    document.querySelector("#btn-mv-register").addEventListener("click", function () {
+        location.href = "${root}/article?action=mvwrite";
+    });
 </script>
 </body>
 

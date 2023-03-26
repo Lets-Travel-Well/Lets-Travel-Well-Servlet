@@ -46,7 +46,8 @@ public class ArticleController extends HttpServlet {
             path = view(request, response);
             forward(request, response, path);
         } else if ("mvwrite".equals(action)) {
-            path = "/board/write.jsp";
+            System.out.println("mvwrite");
+            path = "/article/write.jsp";
             redirect(request, response, path);
         } else if ("write".equals(action)) {
             path = write(request, response);
@@ -116,6 +117,7 @@ public class ArticleController extends HttpServlet {
     }
 
     private String write(HttpServletRequest request, HttpServletResponse response) {
+
 //        HttpSession session = request.getSession();
 //        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 //        if (memberDto != null) {
