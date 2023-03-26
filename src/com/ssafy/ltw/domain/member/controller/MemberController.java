@@ -53,10 +53,20 @@ public class MemberController extends HttpServlet {
 		} else if ("login".equals(action)) {
 			path = login(request,response);
 			forward(request, response, path);
+		} else if ("logout".equals(action)) {
+			path = logout(request,response);
+			redirect(request,response, path);
 		} else {
 			redirect(request,response, path);
 		}
 	}
+	private String logout(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+//		session.removeAttribute("userinfo");
+		session.invalidate();
+		return "";
+	}
+
 	private String login(HttpServletRequest request, HttpServletResponse response) {
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userpwd");

@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <c:set var="root" value="${pageContext.request.contextPath}" />
+    <c:if test="${cookie.ssafy_id.value ne null}">
+      <c:set var="idck" value=" checked" />
+      <c:set var="saveid" value="${cookie.userId.value}" />
+    </c:if>
     <!DOCTYPE html>
     <html lang="en">
 
@@ -29,7 +33,7 @@
       <!-- Navigation-->
       <nav class="shadow navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
-    	  <a class="navbar-brand fs-4" href="${root }">
+          <a class="navbar-brand fs-4" href="${root }">
             <!-- <img src="assets/img/navbar-logo.svg" alt="..." /> -->
             Let's Travel Well
           </a>
@@ -38,9 +42,9 @@
             Menu
             <i class="fas fa-bars ms-1"></i>
           </button>
-			<jsp:include page="/fragment/nav.jsp">
-			<jsp:param value="ok" name="flag"/>
-			</jsp:include>
+          <jsp:include page="/fragment/nav.jsp">
+            <jsp:param value="ok" name="flag" />
+          </jsp:include>
         </div>
       </nav>
       <!-- Masthead-->
@@ -64,16 +68,21 @@
 
                       <form class="mx-1 mx-md-4" id='login-form'>
                         <input type='hidden' name='action' value='login' />
-                        <div class="d-flex flex-row align-items-center mb-4">
-                          <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                        <div class="d-flex flex-row mb-4">
+                          <i class="mt-3 fas fa-envelope fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
                             <input type="text" id="loginId" name="userId" class="form-control" />
                             <label class="form-label" for="loginId">Your Id</label>
                           </div>
+                          <div class="form-check mb-3 float-end ms-2">
+                            <input class="form-check-input" type="checkbox" value="ok" id="saveid" name="saveid"
+                              ${idck} />
+                            <label class="form-check-label" for="saveid"> save </label>
+                          </div>
                         </div>
 
-                        <div class="d-flex flex-row align-items-center mb-4">
-                          <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                        <div class="d-flex flex-row mb-4">
+                          <i class="mt-2 fas fa-lock fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
                             <input type="password" id="loginPw" name="userpwd" class="form-control" />
                             <label class="form-label" for="member-login-pw">Password</label>
