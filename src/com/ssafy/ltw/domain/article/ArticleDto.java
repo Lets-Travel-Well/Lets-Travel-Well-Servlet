@@ -1,20 +1,21 @@
 package com.ssafy.ltw.domain.article;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Setter
 @Getter
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ArticleDto {
-    private int id;
-    private String createDate;
-    private String modifyDate;
-    private int memberId;
+    private Long id;
+    private String createdDate;
+    private String modifiedDate;
     private String subject;
     private String content;
     // 조회수 
-    private String hit;
+    private int hit;
     // TODO : 좋아요 기능 추가 구현
+    private long memberId;
 }

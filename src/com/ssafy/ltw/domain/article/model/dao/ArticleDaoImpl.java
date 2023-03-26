@@ -5,10 +5,13 @@ import com.ssafy.ltw.global.util.DBUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+// TODO : 유저 구현되면 바꿔야함 현재 MEMBER_ID 다 -1로 넣어둘 예정
 public class ArticleDaoImpl implements ArticleDao {
 
     private static ArticleDao articleDao;
@@ -32,9 +35,13 @@ public class ArticleDaoImpl implements ArticleDao {
         try {
             conn = dbUtil.getConnection();
             StringBuilder sql = new StringBuilder();
-            sql.append("insert into board (user_id, subject, content) \n");
+            sql.append("insert into article (member_id, subject, content) \n");
             sql.append("values (?, ?, ?)");
+
             pstmt = conn.prepareStatement(sql.toString());
+            pstmt.setLong(1, articleDto.getMemberId());
+            pstmt.setString(2, articleDto.getSubject());
+            pstmt.setString(3, articleDto.getContent());
 
             pstmt.executeUpdate();
         } finally {
@@ -42,34 +49,124 @@ public class ArticleDaoImpl implements ArticleDao {
         }
 
     }
-
     @Override
-    public List<ArticleDto> listArticle(Map<String, Object> param) throws SQLException {
-        return null;
+    public ArticleDto getArticle(Long id) throws SQLException {
+        ArticleDto findArticleDto = null;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("select *\n");
+            sql.append("from article \n");
+            sql.append("where id = ?");
+            pstmt = conn.prepareStatement(sql.toString());
+            pstmt.setLong(1, id);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                findArticleDto = new ArticleDto().builder()
+                        .id(rs.getLong("id"))
+                        .createdDate(rs.getString("created_date"))
+                        .modifiedDate(rs.getString("modified_date"))
+                        .subject(rs.getString("subject"))
+                        .content(rs.getString("content"))
+                        .hit(rs.getInt("hit"))
+                        .memberId(rs.getLong("member_id"))
+                        .build();
+            }
+        } finally {
+            dbUtil.close(rs, pstmt, conn);
+        }
+        return findArticleDto;
     }
-
     @Override
-    public int getTotalArticleCount(Map<String, Object> param) throws SQLException {
-        return 0;
+    public List<ArticleDto> listArticle() throws SQLException {
+        List<ArticleDto> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("select * \n");
+            sql.append("from article \n");
+            pstmt = conn.prepareStatement(sql.toString());
+            rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                ArticleDto findArticleDto = new ArticleDto().builder()
+                        .id(rs.getLong("id"))
+                        .createdDate(rs.getString("created_date"))
+                        .modifiedDate(rs.getString("modified_date"))
+                        .subject(rs.getString("subject"))
+                        .content(rs.getString("content"))
+                        .hit(rs.getInt("hit"))
+                        .memberId(rs.getLong("member_id"))
+                        .build();
+                list.add(findArticleDto);
+            }
+        } finally {
+            dbUtil.close(rs, pstmt, conn);
+        }
+        return list;
     }
-
     @Override
-    public ArticleDto getArticle(int id) throws SQLException {
-        return null;
-    }
-
-    @Override
-    public void updateHit(int id) throws SQLException {
-
+    public void updateHit(Long id) throws SQLException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("update article \n");
+            sql.append("set hit = hit + 1 \n");
+            sql.append("where id = ?");
+            pstmt = conn.prepareStatement(sql.toString());
+            pstmt.setLong(1, id);
+            pstmt.executeUpdate();
+        } finally {
+            dbUtil.close(pstmt, conn);
+        }
     }
 
     @Override
     public void modifyArticle(ArticleDto articleDto) throws SQLException {
-
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("update article \n");
+            sql.append("set subject=?, content=? \n");
+            sql.append("where id = ?");
+            pstmt = conn.prepareStatement(sql.toString());
+            pstmt.setString(1, articleDto.getSubject());
+            pstmt.setString(2, articleDto.getContent());
+            pstmt.setLong(3, articleDto.getId());
+            pstmt.executeUpdate();
+        } finally {
+            dbUtil.close(pstmt, conn);
+        }
     }
 
     @Override
-    public void deleteArticle(int id) throws SQLException {
-
+    public void deleteArticle(Long id) throws SQLException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("delete from article \n");
+            sql.append("where id = ?");
+            pstmt = conn.prepareStatement(sql.toString());
+            pstmt.setLong(1, id);
+            pstmt.executeUpdate();
+        } finally {
+            dbUtil.close(pstmt, conn);
+        }
+    }
+    @Override
+    public int getTotalArticleCount(Map<String, Object> param) throws SQLException {
+        return 0;
     }
 }

@@ -8,11 +8,11 @@ import java.util.Map;
 
 public interface ArticleDao {
     void writeArticle(ArticleDto articleDto) throws SQLException;
-    List<ArticleDto> listArticle(Map<String, Object> param) throws SQLException;
+    List<ArticleDto> listArticle() throws SQLException;
     int getTotalArticleCount(Map<String, Object> param) throws SQLException;
-    ArticleDto getArticle(int id) throws SQLException;
-    void updateHit(int id) throws SQLException;
+    ArticleDto getArticle(Long id) throws SQLException;
+    void updateHit(Long id) throws SQLException;
 
     void modifyArticle(ArticleDto articleDto) throws SQLException;
-    void deleteArticle(int id) throws SQLException;
+    void deleteArticle(Long id) throws SQLException;
 }
