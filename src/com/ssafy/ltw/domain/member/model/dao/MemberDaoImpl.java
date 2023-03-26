@@ -50,6 +50,24 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public int joinMember(MemberDto memberDto) throws SQLException {
-		return 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = dbUtil.getConnection();
+			StringBuilder join = new StringBuilder();
+			join.append("insert into member(login_id, login_pw, username, email, phone) \n");
+			join.append("values (?, ?, ?, ?, ?)");
+			
+			pstmt = conn.prepareStatement(join.toString());
+			pstmt.setString(1, memberDto.getLoginId());
+			pstmt.setString(2, memberDto.getLoginPw());
+			pstmt.setString(3, memberDto.getUsername());
+			pstmt.setString(4, memberDto.getEmail());
+			pstmt.setString(5, memberDto.getPhone());
+			
+			return pstmt.executeUpdate();
+		} finally {
+			dbUtil.close(pstmt, conn);
+		}
 	}
 }

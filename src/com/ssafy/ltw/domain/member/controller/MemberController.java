@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ssafy.ltw.domain.member.model.MemberDto;
 import com.ssafy.ltw.domain.member.model.service.MemberService;
 import com.ssafy.ltw.domain.member.model.service.MemberServiceImpl;
 
@@ -63,8 +64,28 @@ public class MemberController extends HttpServlet {
 
 
 	private String join(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO : 이름, 아이디, 비밀번호, 이메일등 회원정보를 받아 MemberDto로 setting.
+		String userName = request.getParameter("userName");
+		String loginId = request.getParameter("loginId");
+		String loginPw = request.getParameter("loginPw");
+		String email = request.getParameter("email");
+		String phone = request.getParameter("phone");
+		
+		MemberDto member = new MemberDto();
+		member.setUsername(userName);
+		member.setLoginId(loginId);
+		member.setLoginPw(loginPw);
+		member.setEmail(email);
+		member.setPhone(phone);
+		
+		try {
+			memberService.joinMember(member);
+			return "/member/login.jsp";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "/member/sign_up.jsp";
+		}
+
 	}
 
 
