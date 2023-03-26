@@ -13,7 +13,7 @@ public class MemberServiceImpl implements MemberService{
 		memberDao = MemberDaoImpl.getMemberDao();
 		
 	}
-	public MemberService getMemberService() {
+	public static MemberService getMemberService() {
 		return memberService;
 	}
 
@@ -25,6 +25,10 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int joinMember(MemberDto memberDto) throws Exception {
 		return memberDao.joinMember(memberDto);
+	}
+	@Override
+	public MemberDto loginMember(String loginId, String loginPw) throws Exception {
+		return memberDao.loginMember(loginId, loginPw);
 	}
 
 
