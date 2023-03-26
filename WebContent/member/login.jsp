@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <c:set var="root" value="${pageContext.request.contextPath}" />
-    <c:if test="${cookie.ssafy_id.value ne null}">
+    <c:if test="${cookie.userId.value ne null}">
       <c:set var="idck" value=" checked" />
       <c:set var="saveid" value="${cookie.userId.value}" />
     </c:if>
