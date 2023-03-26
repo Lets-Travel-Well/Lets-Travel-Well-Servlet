@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.ssafy.ltw.domain.member.model.MemberDto;
-import com.ssafy.ltw.global.util.DBUtil;
+import com.ssafy.ltw.global.util.db.DBUtil;
 
 public class MemberDaoImpl implements MemberDao{
 

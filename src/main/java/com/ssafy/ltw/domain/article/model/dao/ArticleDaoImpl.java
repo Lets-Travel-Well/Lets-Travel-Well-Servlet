@@ -1,7 +1,7 @@
 package com.ssafy.ltw.domain.article.model.dao;
 
 import com.ssafy.ltw.domain.article.ArticleDto;
-import com.ssafy.ltw.global.util.DBUtil;
+import com.ssafy.ltw.global.util.db.DBUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +29,8 @@ public class ArticleDaoImpl implements ArticleDao {
         return articleDao;
     }
     @Override
-    public void writeArticle(ArticleDto articleDto) throws SQLException {
+    public int writeArticle(ArticleDto articleDto) throws SQLException {
+        int res = -1;
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
@@ -43,11 +44,11 @@ public class ArticleDaoImpl implements ArticleDao {
             pstmt.setString(2, articleDto.getSubject());
             pstmt.setString(3, articleDto.getContent());
 
-            pstmt.executeUpdate();
+            res = pstmt.executeUpdate();
         } finally {
             dbUtil.close(pstmt, conn);
         }
-
+        return res;
     }
     @Override
     public ArticleDto getArticle(Long id) throws SQLException {
@@ -165,8 +166,28 @@ public class ArticleDaoImpl implements ArticleDao {
             dbUtil.close(pstmt, conn);
         }
     }
+
     @Override
     public int getTotalArticleCount(Map<String, Object> param) throws SQLException {
         return 0;
+    }
+
+    @Override
+    public void clear() {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("delete from article");
+
+            pstmt = conn.prepareStatement(sql.toString());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbUtil.close(pstmt, conn);
+        }
     }
 }
