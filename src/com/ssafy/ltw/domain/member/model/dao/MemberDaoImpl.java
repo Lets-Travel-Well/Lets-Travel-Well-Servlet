@@ -70,4 +70,31 @@ public class MemberDaoImpl implements MemberDao{
 			dbUtil.close(pstmt, conn);
 		}
 	}
+
+	@Override
+	public MemberDto loginMember(String userId, String userPw) throws SQLException {
+		MemberDto memberDto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = dbUtil.getConnection();
+			StringBuilder loginMember = new StringBuilder();
+			loginMember.append("select login_id, username \n");
+			loginMember.append("from member \n");
+			loginMember.append("where login_id = ? and login_pw = ? \n");
+			pstmt = conn.prepareStatement(loginMember.toString());
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userPw);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				memberDto = new MemberDto();
+				memberDto.setLoginId(rs.getString("login_id"));
+				memberDto.setUsername(rs.getString("username"));
+			}
+		} finally {
+			dbUtil.close(rs, pstmt, conn);
+		}
+		return memberDto;
+	}
 }

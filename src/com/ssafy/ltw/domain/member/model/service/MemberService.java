@@ -8,4 +8,6 @@ public interface MemberService {
 	// 회원가입
 	int joinMember(MemberDto memberDto) throws Exception;
 	
+	// 로그인 
+	MemberDto loginMember(String loginId, String loginPw) throws Exception;
 }

@@ -1,8 +1,12 @@
         // 아이디 중복 버튼 클릭시 => controller 호출 => /member?action=idCheck&userId=?
         var userid = document.getElementById("loginId");
         var idCheck = false;
+        var root = "/lets_travel_well_servlet"
+        
         document.getElementById("idCheck").addEventListener("click", () => {
-          fetch("${root}/member?action=idCheck&userid=" + userid.value)
+        	var url = root + "/member?action=idCheck&userid=" + userid.value;
+        	console.log(url);
+          fetch(url)
             .then(response => response.text())
             .then(data => {
               console.log(data);
@@ -38,7 +42,6 @@
             passwordConfirmCheck = false;
           }
         })
-
         document.getElementById("register-button").addEventListener("click", () => {
           if (!idCheck) {
             // 아이디 중복 체크 하지 않음
@@ -65,7 +68,9 @@
           }
           
           let form = document.querySelector("#form-join");
-          form.setAttribute("action","${root}/member");
+          let url = root + "/member";
+          console.log(url);
+          form.setAttribute("action",url);
           form.submit();
         })
 

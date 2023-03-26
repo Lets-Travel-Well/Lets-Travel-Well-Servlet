@@ -32,7 +32,7 @@
 
       <nav class="shadow navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
-          <a class="navbar-brand fs-4" href="/index.html">
+      <a class="navbar-brand fs-4" href="${root }">
             <!-- <img src="assets/img/navbar-logo.svg" alt="..." /> -->
             Let's Travel Well
           </a>
@@ -50,10 +50,10 @@
                 <a class="nav-link active" href="./my_travel.html#my-travel">My Travel</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="./login.html#login-section">login</a>
-              </li>
+                <a class="nav-link" href="${root}/member/login.jsp#login-section">login</a>
+              </li>	
               <li class="nav-item">
-                <a class="nav-link" href="${root}/member?action=mvjoin">Sign Up</a>
+                <a class="nav-link" href="${root}/member/sign_up.jsp#signup-section">Sign Up</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="./my_page.html#mypage-section">My Page</a>
@@ -204,11 +204,13 @@
       <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
       <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
       <script>
+
+      console.log("${root}")
       </script>
+            <script src="${root}/assets/js/script.js"></script>
+      <script src='${root}/assets/js/signup.js'></script>
       <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-      <script src="${root}/assets/js/signup.js"></script>
-      <script src="${root}/assets/js/script.js"></script>
     </body>
 
     </html>
