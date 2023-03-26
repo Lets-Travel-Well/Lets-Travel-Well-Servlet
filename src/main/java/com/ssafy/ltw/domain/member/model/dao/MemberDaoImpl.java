@@ -50,6 +50,51 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public int joinMember(MemberDto memberDto) throws SQLException {
-		return 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = dbUtil.getConnection();
+			StringBuilder join = new StringBuilder();
+			join.append("insert into member(login_id, login_pw, username, email, phone) \n");
+			join.append("values (?, ?, ?, ?, ?)");
+			
+			pstmt = conn.prepareStatement(join.toString());
+			pstmt.setString(1, memberDto.getLoginId());
+			pstmt.setString(2, memberDto.getLoginPw());
+			pstmt.setString(3, memberDto.getUsername());
+			pstmt.setString(4, memberDto.getEmail());
+			pstmt.setString(5, memberDto.getPhone());
+			
+			return pstmt.executeUpdate();
+		} finally {
+			dbUtil.close(pstmt, conn);
+		}
+	}
+
+	@Override
+	public MemberDto loginMember(String userId, String userPw) throws SQLException {
+		MemberDto memberDto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = dbUtil.getConnection();
+			StringBuilder loginMember = new StringBuilder();
+			loginMember.append("select login_id, username \n");
+			loginMember.append("from member \n");
+			loginMember.append("where login_id = ? and login_pw = ? \n");
+			pstmt = conn.prepareStatement(loginMember.toString());
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userPw);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				memberDto = new MemberDto();
+				memberDto.setLoginId(rs.getString("login_id"));
+				memberDto.setUsername(rs.getString("username"));
+			}
+		} finally {
+			dbUtil.close(rs, pstmt, conn);
+		}
+		return memberDto;
 	}
 }
