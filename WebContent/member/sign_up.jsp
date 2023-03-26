@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
   
   <link href="${root}/assets/css/style.css" rel="stylesheet" />
+
 </head>
 
 <body id="page-top">
@@ -80,38 +81,70 @@
                     Sign up
                   </p>
 
-                  <form class="mx-1 mx-md-4">
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                  <form class="mx-1 mx-md-4" id="form-join" method="POST" action="">
+                  	<input type="hidden" name="action" value="join">
+					          <div class="d-flex flex-row mb-4">
+					            <i class="mt-2 fas fa-file-signature fa-lg me-3 fa-fw"></i>	
+                      <div class="form-outline flex-fill mb-0 me-3">
+                        <input type="text" id="loginId" class="form-control" />
+                        <label class="form-label" for="loginId">Your Id</label>
+                      </div>
+                      <!-- TODO: 아이디 중복 버튼  -->
+                      <div class="col-2">
+                        <button id="idCheck" class="btn btn-outline-success shadow" type="button">
+                         	check
+                        </button>
+                      </div>
+                      <div>
+                        
+                      </div>
+                    </div>
+                  
+                    <div class="d-flex flex-row mb-4">
+                      <i class=" mt-2 fas fa-lock fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="password" id="loginPw" class="form-control" />
+                        <label class="form-label" for="loginPw">Password</label>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-row  mb-4">
+                      <i class="mt-2 fas fa-key fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="password" id="loginPwConfirm" class="form-control" />
+                        <label class="form-label" for="loginPwConfirm">Repeat your password</label>
+                      </div>
+                    </div>
+                    
+                    
+                    <div class="d-flex flex-row mb-4">
+                      <i class="mt-2 fas fa-user fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
                         <input type="text" id="memberName" class="form-control" />
                         <label class="form-label" for="memberName">Your Name</label>
                       </div>
                     </div>
 
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="d-flex flex-row mb-4">
+                      <i class="mt-2 fas fa-envelope fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <input type="email" id="memberEmail" class="form-control" />
-                        <label class="form-label" for="memberEmail">Your Email</label>
+                        <input type="email" id="email" class="form-control" />
+                        <label class="form-label" for="email">Your Email</label>
                       </div>
                     </div>
+                    
+                    <div class="d-flex flex-row mb-4">
+                      <i class="mt-2 fas fa-phone  fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+						<input type="tel" id="phone" name="phone" class="form-control"
+					       pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
+					       required>
+                        <label class="form-label" for="phone">Your Phone</label> 	</br>
+                        <small>Format: 010-1234-7890</small>
+                      </div>
+                    </div>                    
 
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                      <div class="form-outline flex-fill mb-0">
-                        <input type="password" id="memberPw" class="form-control" />
-                        <label class="form-label" for="memberPw">Password</label>
-                      </div>
-                    </div>
 
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                      <div class="form-outline flex-fill mb-0">
-                        <input type="password" id="memberPwConfirm" class="form-control" />
-                        <label class="form-label" for="memberPwConfirm">Repeat your password</label>
-                      </div>
-                    </div>
 
                     <div class="form-check d-flex justify-content-center mb-5">
                       <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
@@ -122,7 +155,7 @@
                     </div>
 
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                      <button type="button" class="btn btn-primary btn-lg" id="register-button">
+                      <button type="button" class="btn btn-primary btn-lg shadow" id="register-button">
                         Register
                       </button>
                     </div>
@@ -161,15 +194,41 @@
   <!-- Bootstrap core JS-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Core theme JS-->
-  <script   type="text/javscript" src="${root}/assets/js/scripts.js"></script>
+
+  
   
   <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
   <!-- * *                               SB Forms JS                               * *-->
   <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
   <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+  <script>
+   	// 아이디 중복 버튼 클릭시 => controller 호출 => /member?action=idCheck&userId=?
+   	var userid = document.getElementById("loginId");
+   	document.getElementById("idCheck").addEventListener("click",() => {
+      fetch("${root}/member?action=idCheck&userid=" + userid.value)
+	   		.then(response =>  response.text())
+	   		.then(data => {
+	   			console.log(data);
+		 		if(data == 0) {
+        		  // 아이디 중복
+          			alert(userid.value+"는 사용할 수 있습니다.")
+					userid.readOnly = true;
+
+		 		} else {
+					alert(userid.value+"는 사용할 수 없습니다.");
+          			userid.value = "";
+          			userid.focus();
+		 		}
+  		   });
+    })
+   	// 아이디 중복 시 = >alert 창 띄우기 & id값 비우기 
+   	
+   	// 아이디 중복이 아닌 경우 => alert 창 띠우기 & readOnly 로 변경하기 
+  </script>
   <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script type="text/javscript" src="${root}/assets/js/signup.js"></script>
+  <script type="text/javscript" src="${root}/assets/js/script.js"></script>
 </body>
 
 </html>

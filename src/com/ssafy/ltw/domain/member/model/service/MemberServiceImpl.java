@@ -13,7 +13,7 @@ public class MemberServiceImpl implements MemberService{
 		memberDao = MemberDaoImpl.getMemberDao();
 		
 	}
-	public MemberService getMemberService() {
+	public static MemberService getMemberService() {
 		return memberService;
 	}
 
