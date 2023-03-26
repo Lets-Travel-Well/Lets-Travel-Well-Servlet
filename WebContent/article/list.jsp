@@ -56,6 +56,31 @@
 <!-- login section -->
 <section>
     <div class="container" id="article-list-section">
+        <div class="row align-self-center mb-2">
+            <div class="col-md-2 text-start">
+                <button type="button" id="btn-mv-register" class="btn btn-outline-primary btn-sm">
+                    글쓰기
+                </button>
+            </div>
+            <div class="col-md-7 offset-3">
+                <form class="d-flex">
+                    <select
+                            id="key"
+                            class="form-select form-select-sm ms-5 me-1 w-50"
+                            aria-label="검색조건"
+                    >
+                        <option selected>검색조건</option>
+                        <option value="articleno">글번호</option>
+                        <option value="subject">제목</option>
+                        <option value="userid">작성자</option>
+                    </select>
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" placeholder="검색어..." />
+                        <button class="btn btn-dark" type="button">검색</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         <table class="table table-hover">
             <thead>
             <tr class="text-center">
@@ -87,6 +112,7 @@
             </c:forEach>
             </tbody>
         </table>
+
     </div>
 </section>
 <!-- Footer-->
@@ -122,7 +148,15 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
+<script>
+    let titles = document.querySelectorAll(".article-title");
+    titles.forEach(function (title) {
+        title.addEventListener("click", function () {
+            console.log(this.getAttribute("data-no"));
+            location.href = "${root}/article?action=view&articleId=" + this.getAttribute("data-no");
+        });
+    });
+</script>
 </body>
 
 </html>

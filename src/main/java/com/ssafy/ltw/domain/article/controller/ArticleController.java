@@ -81,7 +81,7 @@ public class ArticleController extends HttpServlet {
                 for(Article article : articles){
                     Member findMember = memberService.findUserNameById(article.getMemberId());
                     // TODO : 유니크한 키값도 같이 가져와야함..
-                    ArticleDto articleDto = new ArticleDto(article, findMember.getUsername());
+                    ArticleDto articleDto = new ArticleDto(article, findMember);
                     list.add(articleDto);
                 }
                 request.setAttribute("articles", list);
@@ -95,23 +95,24 @@ public class ArticleController extends HttpServlet {
     }
 
     private String view(HttpServletRequest request, HttpServletResponse response) {
-//        HttpSession session = request.getSession();
-//        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//        if (memberDto != null) {
-//            int articleNo = Integer.parseInt(request.getParameter("articleno"));
-//            try {
-//                BoardDto boardDto = boardService.getArticle(articleNo);
-//                boardService.updateHit(articleNo);
-//                request.setAttribute("article", boardDto);
-//
-//                return "/board/view.jsp";
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                return "/index.jsp";
-//            }
-//        } else
-//            return "/user/login.jsp";
-        return null;
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("userinfo");
+        if (member != null) {
+            long articleId = Integer.parseInt(request.getParameter("articleId"));
+            try {
+                Article article = articleService.getArticle(articleId);
+                articleService.updateHit(articleId);
+                Member findMember = memberService.findUserNameById(article.getMemberId());
+                ArticleDto articleDto = new ArticleDto(article, findMember);
+                request.setAttribute("article", articleDto);
+
+                return "/article/view.jsp";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "/index.jsp";
+            }
+        } else
+            return "/user/login.jsp";
     }
 
     private String write(HttpServletRequest request, HttpServletResponse response) {
