@@ -85,7 +85,7 @@
                           <i class="mt-2 fas fa-lock fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
                             <input type="password" id="loginPw" name="userpwd" class="form-control" />
-                            <label class="form-label" for="member-login-pw">Password</label>
+                            <label class="form-label" for="loginPw">Password</label>
                           </div>
                         </div>
 
