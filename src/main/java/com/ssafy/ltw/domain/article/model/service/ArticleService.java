@@ -1,10 +1,10 @@
 package com.ssafy.ltw.domain.article.model.service;
 
-import com.ssafy.ltw.domain.article.ArticleDto;
-import com.ssafy.ltw.global.util.PageNavigation;
-
 import java.util.List;
 import java.util.Map;
+
+import com.ssafy.ltw.domain.article.ArticleDto;
+import com.ssafy.ltw.global.util.PageNavigation;
 
 public interface ArticleService {
 

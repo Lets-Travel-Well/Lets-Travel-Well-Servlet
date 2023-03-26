@@ -3,8 +3,6 @@ package com.ssafy.ltw.domain.article;
 import com.ssafy.ltw.domain.article.model.service.ArticleService;
 import com.ssafy.ltw.domain.article.model.service.ArticleServiceImpl;
 
-import java.util.List;
-
 // TODO : 수정 필요
 public class ArticleServiceTest {
     public static void main(String[] args) throws Exception{

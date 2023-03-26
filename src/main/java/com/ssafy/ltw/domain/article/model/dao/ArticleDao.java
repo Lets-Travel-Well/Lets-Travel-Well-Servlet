@@ -1,10 +1,10 @@
 package com.ssafy.ltw.domain.article.model.dao;
 
-import com.ssafy.ltw.domain.article.ArticleDto;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+
+import com.ssafy.ltw.domain.article.ArticleDto;
 
 public interface ArticleDao {
     int writeArticle(ArticleDto articleDto) throws SQLException;
