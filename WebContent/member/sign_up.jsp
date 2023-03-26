@@ -41,25 +41,9 @@
             Menu
             <i class="fas fa-bars ms-1"></i>
           </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="./search_place.html#search-place">Search Place</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="./my_travel.html#my-travel">My Travel</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="${root}/member/login.jsp#login-section">login</a>
-              </li>	
-              <li class="nav-item">
-                <a class="nav-link" href="${root}/member/sign_up.jsp#signup-section">Sign Up</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./my_page.html#mypage-section">My Page</a>
-              </li>
-            </ul>
-          </div>
+			<jsp:include page="/fragment/nav.jsp">
+			<jsp:param value="ok" name="flag"/>
+			</jsp:include>
         </div>
       </nav>
       <!-- Masthead-->
