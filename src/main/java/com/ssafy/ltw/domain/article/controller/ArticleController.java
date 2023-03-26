@@ -1,16 +1,19 @@
 package com.ssafy.ltw.domain.article.controller;
 
-import java.io.IOException;
+import com.ssafy.ltw.domain.article.model.service.ArticleService;
+import com.ssafy.ltw.domain.article.model.service.ArticleServiceImpl;
+import com.ssafy.ltw.domain.member.model.MemberDto;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.ssafy.ltw.domain.article.model.service.ArticleService;
-import com.ssafy.ltw.domain.article.model.service.ArticleServiceImpl;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/article")
 public class ArticleController extends HttpServlet {
@@ -28,8 +31,31 @@ public class ArticleController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("doGet");
         String action = request.getParameter("action");
-
         String path = "";
+        if ("list".equals(action)) {
+            path = list(request, response);
+            forward(request, response, path);
+        } else if ("view".equals(action)) {
+            path = view(request, response);
+            forward(request, response, path);
+        } else if ("mvwrite".equals(action)) {
+            path = "/board/write.jsp";
+            redirect(request, response, path);
+        } else if ("write".equals(action)) {
+            path = write(request, response);
+            redirect(request, response, path);
+        } else if ("mvmodify".equals(action)) {
+            path = mvModify(request, response);
+            forward(request, response, path);
+        } else if ("modify".equals(action)) {
+            path = modify(request, response);
+            forward(request, response, path);
+        } else if ("delete".equals(action)) {
+            path = delete(request, response);
+            redirect(request, response, path);
+        } else {
+            redirect(request, response, path);
+        }
     }
 
     @Override
@@ -37,16 +63,45 @@ public class ArticleController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         doGet(request, response);
     }
-//    private void forward(HttpServletRequest request, HttpServletResponse response, String path)
-//            throws ServletException, IOException {
-//        RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-//        dispatcher.forward(request, response);
-//    }
+    private String list(HttpServletRequest request, HttpServletResponse response) {
+//        HttpSession session = request.getSession();
+//        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+//        if (memberDto != null) {
+//            try {
+//                List<ArticleDto> list = boardService.listArticle();
+//                request.setAttribute("articles", list);
 //
-//    private void redirect(HttpServletRequest request, HttpServletResponse response, String path) throws IOException {
-//        response.sendRedirect(request.getContextPath() + path);
-//    }
-//    private String write(HttpServletRequest request, HttpServletResponse response) {
+//                return "/board/list.jsp";
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return "/index.jsp";
+//            }
+//        } else
+//            return "/user/login.jsp";
+        return null;
+    }
+
+    private String view(HttpServletRequest request, HttpServletResponse response) {
+//        HttpSession session = request.getSession();
+//        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+//        if (memberDto != null) {
+//            int articleNo = Integer.parseInt(request.getParameter("articleno"));
+//            try {
+//                BoardDto boardDto = boardService.getArticle(articleNo);
+//                boardService.updateHit(articleNo);
+//                request.setAttribute("article", boardDto);
+//
+//                return "/board/view.jsp";
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return "/index.jsp";
+//            }
+//        } else
+//            return "/user/login.jsp";
+        return null;
+    }
+
+    private String write(HttpServletRequest request, HttpServletResponse response) {
 //        HttpSession session = request.getSession();
 //        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 //        if (memberDto != null) {
@@ -59,10 +114,39 @@ public class ArticleController extends HttpServlet {
 //                return "/article?action=list";
 //            } catch (Exception e) {
 //                e.printStackTrace();
-//                request.setAttribute("msg", "글작성 중 문제 발생!!!");
-//                return "/error/error.jsp";
+//                return "/index.jsp";
 //            }
 //        } else
 //            return "/user/login.jsp";
-//    }
+        return null;
+    }
+
+    private String mvModify(HttpServletRequest request, HttpServletResponse response) {
+        // TODO : 수정하고자하는 글의 글번호를 얻는다.
+        // TODO : 글번호에 해당하는 글정보를 얻고 글정보를 가지고 modify.jsp로 이동.
+        return null;
+    }
+
+    private String modify(HttpServletRequest request, HttpServletResponse response) {
+        // TODO : 수정 할 글정보를 얻고 BoardDto에 set.
+        // TODO : boardDto를 파라미터로 service의 modifyArticle() 호출.
+        // TODO : 글수정 완료 후 view.jsp로 이동.(이후의 프로세스를 생각해 보세요.)
+        return null;
+    }
+
+    private String delete(HttpServletRequest request, HttpServletResponse response) {
+        // TODO : 삭제할 글 번호를 얻는다.
+        // TODO : 글번호를 파라미터로 service의 deleteArticle()을 호출.
+        // TODO : 글삭제 완료 후 list.jsp로 이동.(이후의 프로세스를 생각해 보세요.)
+        return null;
+    }
+
+    private void forward(HttpServletRequest request, HttpServletResponse response, String path) throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+        dispatcher.forward(request, response);
+    }
+
+    private void redirect(HttpServletRequest request, HttpServletResponse response, String path) throws IOException {
+        response.sendRedirect(request.getContextPath() + path);
+    }
 }
