@@ -1,9 +1,9 @@
 package com.ssafy.ltw.domain.article.model.service;
 
 import com.ssafy.ltw.domain.article.ArticleDto;
+import com.ssafy.ltw.global.util.PageNavigation;
 import com.ssafy.ltw.domain.article.model.dao.ArticleDao;
 import com.ssafy.ltw.domain.article.model.dao.ArticleDaoImpl;
-import com.ssafy.ltw.global.util.PageNavigation;
 
 import java.util.List;
 import java.util.Map;
@@ -22,8 +22,8 @@ public class ArticleServiceImpl implements ArticleService {
         return articleService;
     }
     @Override
-    public void writeArticle(ArticleDto articleDto) throws Exception {
-        articleDao.writeArticle(articleDto);
+    public int writeArticle(ArticleDto articleDto) throws Exception {
+        return articleDao.writeArticle(articleDto);
     }
 
     @Override

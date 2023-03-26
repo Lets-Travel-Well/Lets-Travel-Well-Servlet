@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface ArticleService {
 
-    void writeArticle(ArticleDto articleDto) throws Exception;
+    int writeArticle(ArticleDto articleDto) throws Exception;
     List<ArticleDto> listArticle() throws Exception;
     PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
     ArticleDto getArticle(Long id) throws Exception;
