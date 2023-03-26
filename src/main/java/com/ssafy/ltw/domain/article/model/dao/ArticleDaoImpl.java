@@ -1,8 +1,5 @@
 package com.ssafy.ltw.domain.article.model.dao;
 
-import com.ssafy.ltw.domain.article.ArticleDto;
-import com.ssafy.ltw.global.util.db.DBUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import com.ssafy.ltw.domain.article.ArticleDto;
+import com.ssafy.ltw.global.util.db.DBUtil;
 
 // TODO : 유저 구현되면 바꿔야함 현재 MEMBER_ID 다 -1로 넣어둘 예정
 public class ArticleDaoImpl implements ArticleDao {

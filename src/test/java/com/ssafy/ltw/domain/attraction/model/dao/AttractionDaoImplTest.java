@@ -1,10 +1,13 @@
 package com.ssafy.ltw.domain.attraction.model.dao;
 
-import com.ssafy.ltw.domain.attraction.AttractionInfo;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import com.ssafy.ltw.domain.attraction.AttractionInfo;
+import com.ssafy.ltw.domain.attraction.model.dao.AttractionDao;
+import com.ssafy.ltw.domain.attraction.model.dao.AttractionDaoImpl;
 
 class AttractionDaoImplTest {
     private final AttractionDao attractionDao = AttractionDaoImpl.getAttractionDao();

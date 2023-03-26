@@ -9,10 +9,10 @@ public class DBUtil {
 	private DBProperties dbProperties = null;
 	private DBUtil() {
 		// 개발 환경
-//		dbProperties = new DBLocalProperties();
+		dbProperties = new DBLocalProperties();
 
 		// 테스트 환경
-		dbProperties = new DBTestProperties();
+		//dbProperties = new DBTestProperties();
 		try {
 			Class.forName(dbProperties.getDriver());
 		} catch (ClassNotFoundException e) {

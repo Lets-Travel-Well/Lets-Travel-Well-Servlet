@@ -1,6 +1,11 @@
 package com.ssafy.ltw.domain.article;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
@@ -18,4 +23,9 @@ public class ArticleDto {
     private int hit;
     // TODO : 좋아요 기능 추가 구현
     private long memberId;
+
+	
+	
+    
+    
 }
