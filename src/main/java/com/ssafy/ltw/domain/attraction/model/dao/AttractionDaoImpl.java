@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ssafy.ltw.domain.article.ArticleDto;
 import com.ssafy.ltw.domain.attraction.model.AttractionInfo;
 import com.ssafy.ltw.domain.attraction.model.Gugun;
 import com.ssafy.ltw.domain.attraction.model.Sido;

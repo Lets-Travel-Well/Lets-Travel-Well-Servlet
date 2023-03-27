@@ -38,7 +38,7 @@ public class MemberController extends HttpServlet {
 		System.out.println(action);
 		String path = "";
 		if("mvjoin".equals(action)) {
-			path = "/member/sign_up.jsp";
+			path = "/member/sign_up.jsp#signup-serction";
 			redirect(request,response,path);
 		} else if("idCheck".equals(action)) {
 			int cnt = idCheck(request,response);
@@ -46,7 +46,7 @@ public class MemberController extends HttpServlet {
 			response.getWriter().print(cnt);
 		} else if("join".equals(action)) {
 			path = join(request,response);
-			forward(request, response, path);
+			redirect(request, response, path);
 		} else if("mvlogin".equals(action)) {
 			path = "/member/login.jsp";
 			redirect(request,response,path);
@@ -56,10 +56,46 @@ public class MemberController extends HttpServlet {
 		} else if ("logout".equals(action)) {
 			path = logout(request,response);
 			redirect(request,response, path);
+		} else if ("mypage".equals(action)) {
+			path = mypage(request,response);
+			forward(request, response, path);
+		} else if ("modify".equals(action)) {
+			// 수정하고, mypage forward
+			path = modify(request,response);
+			forward(request, response, path);
 		} else {
 			redirect(request,response, path);
 		}
 	}
+	
+	
+	private String mypage(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("userinfo");
+		
+
+			try {
+				if(loginMember != null) {
+					// 로그인 되어있는 상태
+					long id = memberService.findIdByUserId(loginMember.getLoginId());
+					Member member = memberService.findUserNameById(id);
+					System.out.println(member);
+					request.setAttribute("member", member);
+					return "/member/my_page.jsp#mypage-section";
+				} else {
+					// 로그인이 되어있지 않음 
+					request.setAttribute("msg", "로그인이 필요합니다.");
+					return "/member/login.jsp#login-section";
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "/error/error.jsp";
+			} 
+			
+
+		
+	}
+
 	private String logout(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 //		session.removeAttribute("userinfo");
@@ -98,7 +134,7 @@ public class MemberController extends HttpServlet {
 			} else {
 				request.setAttribute("msg", "아이디 또는 비밀번호 확인 후 다시 로그인하세요.");
 				
-				return "/member/login.jsp";
+				return "/member/login.jsp#login-section";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,14 +156,14 @@ public class MemberController extends HttpServlet {
 
 
 	private String join(HttpServletRequest request, HttpServletResponse response) {
-		String userName = request.getParameter("memberName");
+		String username = request.getParameter("username");
 		String loginId = request.getParameter("loginId");
 		String loginPw = request.getParameter("loginPw");
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
 		
 		Member member = new Member();
-		member.setUsername(userName);
+		member.setUsername(username);
 		member.setLoginId(loginId);
 		member.setLoginPw(loginPw);
 		member.setEmail(email);
@@ -136,10 +172,10 @@ public class MemberController extends HttpServlet {
 		try {
 			memberService.joinMember(member);
 			System.out.println("joinMember");
-			return "/member/login.jsp";
+			return "/member/login.jsp#login-section";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "/member/sign_up.jsp";
+			return "/member/sign_up.jsp#signup-section";
 		}
 
 	}

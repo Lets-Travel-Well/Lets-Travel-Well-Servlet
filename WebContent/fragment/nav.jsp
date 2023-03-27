@@ -22,7 +22,7 @@
                 <a class="nav-link" href="${root}/article?action=list">Community</a>
             </li>
           	  <li class="nav-item">
-            	<a class="nav-link" href="./my_page.html#mypage-section">My Page</a>
+            	<a class="nav-link" href="${root}/member?action=mypage#mypage-section">My Page</a>
         	  </li>
         	  <li class="nav-item">
                 <a class="nav-link" href="${root}/member?action=logout">logout</a>
