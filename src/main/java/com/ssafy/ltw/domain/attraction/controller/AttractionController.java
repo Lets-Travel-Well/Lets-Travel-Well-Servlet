@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.ltw.domain.attraction.model.AttractionInfo;
 import com.ssafy.ltw.domain.attraction.model.Gugun;
 import com.ssafy.ltw.domain.attraction.model.Sido;
 import com.ssafy.ltw.domain.attraction.model.service.AttractionService;
@@ -43,17 +44,37 @@ public class AttractionController extends HttpServlet {
 	        response.setCharacterEncoding("utf-8");
 			
 	        List<Gugun> guguns = guguns(request,response);
-			Map<String,List<Gugun>> maps = new HashMap<>();
-			maps.put("guguns", guguns);
 			
 			String result = objectMapper.writeValueAsString(guguns);
+			response.getWriter().write(result);
+		} else if("search".equals(action)) {
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("utf-8");
+			System.out.println("search");
+			List<AttractionInfo> list = search(request,response);
+			
+			String result = objectMapper.writeValueAsString(list);
 			response.getWriter().write(result);
 			
 		} else {
 			redirect(request, response, path);
 		}
 	}	// TODO: sido, gugun, contentsType 받아서 관광지 뽑아서 넘기기 
-	
+	private List<AttractionInfo> search(HttpServletRequest request, HttpServletResponse response) {
+		int sidoCode = Integer.parseInt(request.getParameter("sidoCode"));
+		int gugunCode = Integer.parseInt(request.getParameter("gugunCode"));
+		int contentTypeId = Integer.parseInt(request.getParameter("contentTypeId"));
+		
+		try {
+			List<AttractionInfo> list = attractionService.listAttractionInfoByCriterial(contentTypeId, sidoCode, gugunCode);
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+
 	private List<Gugun> guguns(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {

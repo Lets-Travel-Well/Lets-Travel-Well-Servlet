@@ -14,4 +14,6 @@ public interface AttractionDao {
     List<Sido> listSidos() throws SQLException;
 
 	List<Gugun> listGuguns(int sidoCode) throws SQLException;
+	
+	List<AttractionInfo> listAttractionInfoByCriterial(int contentTypeId, int sidoCode, int gugunCode) throws SQLException;
 }

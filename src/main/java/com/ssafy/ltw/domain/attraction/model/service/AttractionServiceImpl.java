@@ -2,6 +2,7 @@ package com.ssafy.ltw.domain.attraction.model.service;
 
 import java.util.List;
 
+import com.ssafy.ltw.domain.attraction.model.AttractionInfo;
 import com.ssafy.ltw.domain.attraction.model.Gugun;
 import com.ssafy.ltw.domain.attraction.model.Sido;
 import com.ssafy.ltw.domain.attraction.model.dao.AttractionDao;
@@ -27,6 +28,13 @@ public class AttractionServiceImpl implements AttractionService{
 	@Override
 	public List<Gugun> listGugun(int sidoCode) throws Exception {
 		return attractionDao.listGuguns(sidoCode);
+	}
+
+	@Override
+	public List<AttractionInfo> listAttractionInfoByCriterial(int contentTypeId, int sidoCode, int gugunCode)
+			throws Exception {
+		
+		return attractionDao.listAttractionInfoByCriterial(contentTypeId, sidoCode, gugunCode);
 	}
 
 }

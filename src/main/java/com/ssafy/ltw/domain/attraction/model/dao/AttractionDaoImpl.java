@@ -90,4 +90,41 @@ public class AttractionDaoImpl implements AttractionDao{
         }
         return list;
 	}
+
+	@Override
+	public List<AttractionInfo> listAttractionInfoByCriterial(int contentTypeId, int sidoCode, int gugunCode)
+			throws SQLException {
+		
+        List<AttractionInfo> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("select * \n");
+            sql.append("from attraction_info \n");
+            sql.append("where content_type_id = ? and sido_code = ? and gugun_code = ?");
+            pstmt = conn.prepareStatement(sql.toString());
+            pstmt.setInt(1, contentTypeId);
+            pstmt.setInt(2, sidoCode);
+            pstmt.setInt(3, gugunCode);
+            rs = pstmt.executeQuery();
+         // title, addr1, zipcode, first_image, latitude, longitude, 
+            while(rs.next()) {
+            	AttractionInfo attractionInfo = new AttractionInfo().builder()
+            			.title(rs.getString("title"))
+            			.addr1(rs.getString("addr1"))
+            			.zipcode(rs.getString("zipcode"))
+            			.firstImage(rs.getString("first_image"))
+            			.latitude(rs.getDouble("latitude"))
+            			.longitude(rs.getDouble("longitude"))
+            			.build();
+                list.add(attractionInfo);
+            }
+        } finally {
+            dbUtil.close(rs, pstmt, conn);
+        }
+        return list;
+	}
 }

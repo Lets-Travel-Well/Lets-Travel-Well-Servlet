@@ -26,6 +26,7 @@
         type="text/css" />
       <!-- Core theme CSS (includes Bootstrap)-->
       <link href="${root}/assets/css/style.css" rel="stylesheet" />
+      <link href="${root}/assets/css/map.css" rel="stylesheet" />
     </head>
 
     <body id="page-top">
@@ -88,15 +89,9 @@
                   <option value="38">쇼핑</option>
                   <option value="39">음식점</option>
                 </select>
-                <!-- <input
-                id="search-keyword"
-                class="form-control me-2 shadow"
-                type="search"
-                placeholder="검색어"
-                aria-label="검색어"
-              /> -->
+
               </div>
-              <div class="col-2 mt-1">
+              <div class="col-2 mt-1" >
                 <button id="btn-search" class="btn btn-outline-success shadow" type="button">
                   Search
                 </button>
@@ -104,9 +99,9 @@
             </form>
 
             <!-- kakao map start -->
-            <div id="map" class="mt-3 shadow" style="width: 100%; height: 400px"></div>
+            <div id="map" class="mt-3 shadow" style="width: 100%; height: 600px"></div>
             <!-- kakao map end -->
-            <div class="row mt-3">
+            <!-- <div class="row mt-3">
               <table class="table table-striped" style="display: none">
                 <thead>
                   <tr>
@@ -119,7 +114,7 @@
                 </thead>
                 <tbody id="trip-list"></tbody>
               </table>
-            </div>
+            </div> -->
             <!-- 관광지 검색 end -->
           </div>
         </section>
@@ -151,12 +146,12 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
       <!-- Core theme JS-->
       <script src="${root}/assets/js/script.js"></script>
-      <script src="${root}/assets/js/search_place.js"></script>
-
+      
       <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
       <!-- kakao api JS -->
       <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=65e66ed3a412cb73e32b300c2f3a1803&libraries=services,clusterer,drawing"></script>
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=65e66ed3a412cb73e32b300c2f3a1803&libraries=services,clusterer,drawing"></script>
+      <script src="${root}/assets/js/search_place.js"></script>
     </body>
 
     </html>
