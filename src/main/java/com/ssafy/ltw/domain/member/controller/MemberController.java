@@ -61,6 +61,7 @@ public class MemberController extends HttpServlet {
 			forward(request, response, path);
 		} else if ("modify".equals(action)) {
 			// 수정하고, mypage forward
+			System.out.println("modify");
 			path = modify(request,response);
 			forward(request, response, path);
 		} else {
@@ -69,6 +70,28 @@ public class MemberController extends HttpServlet {
 	}
 	
 	
+	private String modify(HttpServletRequest request, HttpServletResponse response) {
+		String loginId = request.getParameter("loginId");
+		String username = request.getParameter("username");
+		String email = request.getParameter("email");
+		String phone = request.getParameter("phone");
+
+		try {
+			Member member = new Member().builder()
+					.loginId(loginId)
+					.username(username)
+					.email(email)
+					.phone(phone)
+					.build();
+			memberService.modifyMember(member);
+			request.setAttribute("member", member);
+			return "/member?action=mypage#mypage-section";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "/error/error.jsp";
+		}
+	}
+
 	private String mypage(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("userinfo");

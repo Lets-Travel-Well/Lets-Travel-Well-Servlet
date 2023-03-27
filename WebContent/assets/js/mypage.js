@@ -4,5 +4,5 @@ document.getElementById("modify-button").addEventListener("click", function () {
     let form = document.getElementById("form-modify");
     let url = root + "/member";
     form.setAttribute("action", url);
-    form.onsubmit();
+    form.submit();
 })

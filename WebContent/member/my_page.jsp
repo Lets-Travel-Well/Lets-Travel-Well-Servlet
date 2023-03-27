@@ -82,8 +82,9 @@
                         <div class="d-flex flex-row mb-4">
                           <i class="mt-2 fas fa-user fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
-                            <input type="text" id="memberName" class="form-control" value='${member.username}' />
-                            <label class="form-label" for="memberName">Your Name</label>
+                            <input type="text" id="username" name='username' class="form-control"
+                              value='${member.username}' />
+                            <label class="form-label" for="username">Your Name</label>
                           </div>
                         </div>
 
