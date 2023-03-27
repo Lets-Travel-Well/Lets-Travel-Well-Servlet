@@ -11,8 +11,8 @@ public class InitData {
         int cnt = 100;
         for(int i = 0; i < 100; i++){
             Article article = new Article().builder()
-                    .subject("test" + i)
-                    .content("testContente" + i)
+                    .subject("qwer" + i)
+                    .content("qwercontent" + i)
                     .memberId(1)
                     .build();
             articleService.writeArticle(article);

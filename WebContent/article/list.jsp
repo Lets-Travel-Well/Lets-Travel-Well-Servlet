@@ -63,20 +63,23 @@
                 </button>
             </div>
             <div class="col-md-7 offset-3">
-                <form class="d-flex">
+                <form class="d-flex" id="form-search" action="">
+                    <input type="hidden" name="action" value="list"/>
+                    <input type="hidden" name="pgno" value="1"/>
                     <select
+                            name="key"
                             id="key"
                             class="form-select form-select-sm ms-5 me-1 w-50"
                             aria-label="검색조건"
                     >
                         <option selected>검색조건</option>
-                        <option value="articleno">글번호</option>
+                        <option value="article_no">글번호</option>
                         <option value="subject">제목</option>
-                        <option value="userid">작성자</option>
+                        <option value="user_id">작성자</option>
                     </select>
                     <div class="input-group input-group-sm">
-                        <input type="text" class="form-control" placeholder="검색어..." />
-                        <button class="btn btn-dark" type="button">검색</button>
+                        <input type="text" name="word" id="word" class="form-control" placeholder="검색어..." />
+                        <button id="btn-search" class="btn btn-dark" type="button">검색</button>
                     </div>
                 </form>
             </div>
@@ -179,6 +182,12 @@
             document.querySelector("#p-word").value = "${param.word}";
             document.querySelector("#form-param").submit();
         });
+    });
+
+    document.querySelector("#btn-search").addEventListener("click", function () {
+        let form = document.querySelector("#form-search");
+        form.setAttribute("action", "${root}/article");
+        form.submit();
     });
 </script>
 </body>
