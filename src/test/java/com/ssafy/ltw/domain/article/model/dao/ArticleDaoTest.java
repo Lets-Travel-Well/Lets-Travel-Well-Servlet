@@ -23,7 +23,7 @@ class ArticleDaoTest {
 
     @AfterEach
     void afterEach(){
-        articleDao.clear();
+//        articleDao.clear();
     }
     @Test
     @DisplayName("게시물 등록한다")
