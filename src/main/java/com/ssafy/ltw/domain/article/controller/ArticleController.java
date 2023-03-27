@@ -8,6 +8,7 @@ import com.ssafy.ltw.domain.member.model.Member;
 import com.ssafy.ltw.domain.member.model.service.MemberService;
 import com.ssafy.ltw.domain.member.model.service.MemberServiceImpl;
 import com.ssafy.ltw.global.util.page.PageNavigation;
+import com.ssafy.ltw.global.util.validation.ParameterCheck;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -47,6 +48,7 @@ public class ArticleController extends HttpServlet {
         pgno = ParameterCheck.notNumberToOne(request.getParameter("pgno"));
         key = ParameterCheck.nullToBlank(request.getParameter("key"));
         word = ParameterCheck.nullToBlank(request.getParameter("word"));
+
         queryStrig = "?pgno=" + pgno + "&key=" + key + "&word=" + URLEncoder.encode(word, "utf-8");
 
         System.out.println("doGet");
@@ -93,7 +95,11 @@ public class ArticleController extends HttpServlet {
         Member member = (Member) session.getAttribute("userinfo");
         if (member != null) {
             try {
-                List<Article> articles = articleService.listArticle();
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("pgno", pgno + "");
+                map.put("key", key);
+                map.put("word", word);
+                List<Article> articles = articleService.listArticle(map);
                 List<ArticleDto> list = new ArrayList<>();
                 for(Article article : articles){
                     Member findMember = memberService.findUserNameById(article.getMemberId());
@@ -103,14 +109,9 @@ public class ArticleController extends HttpServlet {
                 }
                 request.setAttribute("articles", list);
 
-                Map<String, String> map = new HashMap<String, String>();
-                map.put("pgno", pgno + "");
-                map.put("key", key);
-                map.put("word", word);
-
                 PageNavigation pageNavigation = articleService.makePageNavigation(map);
                 request.setAttribute("navigation", pageNavigation);
-                return "/article/list.jsp";
+                return "/article/list.jsp" + queryStrig;
             } catch (Exception e) {
                 e.printStackTrace();
                 return "/index.jsp";
