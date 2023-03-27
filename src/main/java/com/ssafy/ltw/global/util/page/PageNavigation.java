@@ -1,4 +1,4 @@
-package com.ssafy.ltw.global.util;
+package com.ssafy.ltw.global.util.page;
 
 import lombok.Getter;
 import lombok.Setter;

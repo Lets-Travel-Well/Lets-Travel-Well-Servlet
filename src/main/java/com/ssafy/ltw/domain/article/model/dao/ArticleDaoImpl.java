@@ -169,7 +169,36 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public int getTotalArticleCount(Map<String, Object> param) throws SQLException {
-        return 0;
+        int cnt = 0;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("select count(id) \n");
+            sql.append("from article \n");
+            String key = (String) param.get("key");
+            String word = (String) param.get("word");
+            if(!key.isEmpty() && !word.isEmpty()) {
+                if("subject".equals(key)) {
+                    sql.append("where subject like concat('%', ?, '%') \n");
+                }
+//                else {
+//                    sql.append("where ").append(key).append(" = ? \n");
+//                }
+            }
+            pstmt = conn.prepareStatement(sql.toString());
+            if(!key.isEmpty() && !word.isEmpty())
+                pstmt.setString(1, word);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                cnt = rs.getInt(1);
+            }
+        } finally {
+            dbUtil.close(rs, pstmt, conn);
+        }
+        return cnt;
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssafy.ltw.domain.article.model.Article;
-import com.ssafy.ltw.global.util.PageNavigation;
+import com.ssafy.ltw.global.util.page.PageNavigation;
 
 public interface ArticleService {
 
