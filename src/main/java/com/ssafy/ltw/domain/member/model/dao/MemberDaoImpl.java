@@ -133,4 +133,33 @@ public class MemberDaoImpl implements MemberDao{
 		}
 		return member;
 	}
+
+	@Override
+	public long findIdByUserId(String userId) throws SQLException {
+		long findId = -1;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = dbUtil.getConnection();
+			StringBuilder loginMember = new StringBuilder();
+			loginMember.append("select id \n");
+			loginMember.append("from member \n");
+			loginMember.append("where login_id = ?\n");/*
+			/*
+			select username
+			from member
+			where id = 1;
+			*/
+			pstmt = conn.prepareStatement(loginMember.toString());
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				findId = rs.getLong("id");
+			}
+		} finally {
+			dbUtil.close(rs, pstmt, conn);
+		}
+		return findId;
+	}
 }

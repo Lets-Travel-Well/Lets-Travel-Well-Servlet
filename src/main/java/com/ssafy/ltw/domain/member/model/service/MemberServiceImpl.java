@@ -36,4 +36,9 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.findUserNameById(id);
 	}
 
+	@Override
+	public long findIdByUserId(String userId) throws Exception {
+		return memberDao.findIdByUserId(userId);
+	}
+
 }

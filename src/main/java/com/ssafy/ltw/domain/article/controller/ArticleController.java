@@ -50,6 +50,7 @@ public class ArticleController extends HttpServlet {
             path = "/article/write.jsp";
             redirect(request, response, path);
         } else if ("write".equals(action)) {
+            System.out.println("write");
             path = write(request, response);
             redirect(request, response, path);
         } else if ("mvmodify".equals(action)) {
@@ -118,23 +119,25 @@ public class ArticleController extends HttpServlet {
 
     private String write(HttpServletRequest request, HttpServletResponse response) {
 
-//        HttpSession session = request.getSession();
-//        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//        if (memberDto != null) {
-//            BoardDto boardDto = new BoardDto();
-//            boardDto.setUserId(memberDto.getUserId());
-//            boardDto.setSubject(request.getParameter("subject"));
-//            boardDto.setContent(request.getParameter("content"));
-//            try {
-//                boardService.writeArticle(boardDto);
-//                return "/article?action=list";
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                return "/index.jsp";
-//            }
-//        } else
-//            return "/user/login.jsp";
-        return null;
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("userinfo");
+        System.out.println(member.toString());
+        if (member != null) {
+            try {
+                Article article = new Article().builder()
+                        .subject(request.getParameter("subject"))
+                        .content(request.getParameter("content"))
+                        .memberId(memberService.findIdByUserId(member.getLoginId()))
+                        .build();
+                System.out.println(article);
+                articleService.writeArticle(article);
+                return "/article?action=list";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "/index.jsp";
+            }
+        } else
+            return "/user/login.jsp";
     }
 
     private String mvModify(HttpServletRequest request, HttpServletResponse response) {

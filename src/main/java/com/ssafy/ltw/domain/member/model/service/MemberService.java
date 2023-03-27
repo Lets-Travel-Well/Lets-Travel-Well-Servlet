@@ -12,4 +12,6 @@ public interface MemberService {
 	Member loginMember(String loginId, String loginPw) throws Exception;
 
 	Member findUserNameById(Long id) throws Exception;
+
+	long findIdByUserId(String userId) throws Exception;
 }

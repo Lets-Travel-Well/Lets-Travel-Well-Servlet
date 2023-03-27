@@ -33,7 +33,7 @@
 <!-- Navigation-->
 <nav class="shadow navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand fs-4" href="${root }">
+        <a class="navbar-brand fs-4" href="${root}">
             <!-- <img src="assets/img/navbar-logo.svg" alt="..." /> -->
             Let's Travel Well
         </a>
@@ -124,16 +124,19 @@
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    let titles = document.querySelectorAll(".article-title");
-    titles.forEach(function (title) {
-        title.addEventListener("click", function () {
-            console.log(this.getAttribute("data-no"));
-            location.href = "${root}/article?action=view&articleId=" + this.getAttribute("data-no");
-        });
-    });
-
-    document.querySelector("#btn-mv-register").addEventListener("click", function () {
-        location.href = "${root}/article?action=mvwrite";
+    document.querySelector("#btn-register").addEventListener("click", function () {
+        if (!document.querySelector("#subject").value) {
+            alert("제목 입력!!");
+            return;
+        } else if (!document.querySelector("#content").value) {
+            alert("내용 입력!!");
+            return;
+        } else {
+            let form = document.querySelector("#form-register");
+            console.log(form);
+            form.setAttribute("action", "/lets_travel_well_servlet/article");
+            form.submit();
+        }
     });
 </script>
 </body>

@@ -11,4 +11,6 @@ public interface MemberDao {
 	Member loginMember(String userId, String userPw) throws SQLException;
 
 	Member findUserNameById(Long id) throws SQLException;
+
+    long findIdByUserId(String userId) throws SQLException;
 }
