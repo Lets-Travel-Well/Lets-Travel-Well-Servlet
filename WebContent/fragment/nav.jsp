@@ -17,8 +17,10 @@
 		  <c:if test="${not empty userinfo}">
           	<li class="nav-item">
           	  <a class="nav-link" href="./my_travel.html#my-travel">My Travel</a>
-          	</li>		  
-
+          	</li>
+            <li class="nav-item">
+                <a class="nav-link" href="${root}/article?action=list">Community</a>
+            </li>
           	  <li class="nav-item">
             	<a class="nav-link" href="./my_page.html#mypage-section">My Page</a>
         	  </li>

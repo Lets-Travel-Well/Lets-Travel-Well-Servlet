@@ -1,13 +1,14 @@
 package com.ssafy.ltw.domain.member.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
-public class MemberDto {
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Member {
 	private long id;
 	private String createdDate;
 	private String modifiedDate;
@@ -70,6 +71,6 @@ public class MemberDto {
 				+ loginId + ", loginPw=" + loginPw + ", username=" + username + ", email=" + email + ", phone="
 				+ phone + "]";
 	}
-	
-	
+
+
 }

@@ -2,6 +2,7 @@ package com.ssafy.ltw.domain.article;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.ssafy.ltw.domain.article.model.Article;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,14 +29,14 @@ class ArticleServiceTestTest {
     //@Test
     public void 게시물_등록() throws Exception {
         //Given
-        ArticleDto articleDto = new ArticleDto().builder()
+        Article article = new Article().builder()
                 .subject("test")
                 .content("testContente")
                 .memberId(1)
                 .build();
 
         //When
-        int res = articleDao.writeArticle(articleDto);
+        int res = articleDao.writeArticle(article);
         
         //Then
         assertThat(res).isEqualTo(1);

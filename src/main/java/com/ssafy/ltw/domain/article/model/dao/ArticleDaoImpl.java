@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.ssafy.ltw.domain.article.ArticleDto;
+import com.ssafy.ltw.domain.article.model.Article;
 import com.ssafy.ltw.global.util.db.DBUtil;
 
 // TODO : 유저 구현되면 바꿔야함 현재 MEMBER_ID 다 -1로 넣어둘 예정
@@ -29,7 +29,7 @@ public class ArticleDaoImpl implements ArticleDao {
         return articleDao;
     }
     @Override
-    public int writeArticle(ArticleDto articleDto) throws SQLException {
+    public int writeArticle(Article article) throws SQLException {
         int res = -1;
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -40,9 +40,9 @@ public class ArticleDaoImpl implements ArticleDao {
             sql.append("values (?, ?, ?)");
 
             pstmt = conn.prepareStatement(sql.toString());
-            pstmt.setLong(1, articleDto.getMemberId());
-            pstmt.setString(2, articleDto.getSubject());
-            pstmt.setString(3, articleDto.getContent());
+            pstmt.setLong(1, article.getMemberId());
+            pstmt.setString(2, article.getSubject());
+            pstmt.setString(3, article.getContent());
 
             res = pstmt.executeUpdate();
         } finally {
@@ -51,8 +51,8 @@ public class ArticleDaoImpl implements ArticleDao {
         return res;
     }
     @Override
-    public ArticleDto getArticle(Long id) throws SQLException {
-        ArticleDto findArticleDto = null;
+    public Article getArticle(Long id) throws SQLException {
+        Article findArticle = null;
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -66,7 +66,7 @@ public class ArticleDaoImpl implements ArticleDao {
             pstmt.setLong(1, id);
             rs = pstmt.executeQuery();
             if(rs.next()) {
-                findArticleDto = new ArticleDto().builder()
+                findArticle = new Article().builder()
                         .id(rs.getLong("id"))
                         .createdDate(rs.getString("created_date"))
                         .modifiedDate(rs.getString("modified_date"))
@@ -79,11 +79,11 @@ public class ArticleDaoImpl implements ArticleDao {
         } finally {
             dbUtil.close(rs, pstmt, conn);
         }
-        return findArticleDto;
+        return findArticle;
     }
     @Override
-    public List<ArticleDto> listArticle() throws SQLException {
-        List<ArticleDto> list = new ArrayList<>();
+    public List<Article> listArticle() throws SQLException {
+        List<Article> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -96,7 +96,7 @@ public class ArticleDaoImpl implements ArticleDao {
             rs = pstmt.executeQuery();
 
             while(rs.next()) {
-                ArticleDto findArticleDto = new ArticleDto().builder()
+                Article findArticle = new Article().builder()
                         .id(rs.getLong("id"))
                         .createdDate(rs.getString("created_date"))
                         .modifiedDate(rs.getString("modified_date"))
@@ -105,7 +105,7 @@ public class ArticleDaoImpl implements ArticleDao {
                         .hit(rs.getInt("hit"))
                         .memberId(rs.getLong("member_id"))
                         .build();
-                list.add(findArticleDto);
+                list.add(findArticle);
             }
         } finally {
             dbUtil.close(rs, pstmt, conn);
@@ -131,7 +131,7 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Override
-    public void modifyArticle(ArticleDto articleDto) throws SQLException {
+    public void modifyArticle(Article article) throws SQLException {
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
@@ -141,9 +141,9 @@ public class ArticleDaoImpl implements ArticleDao {
             sql.append("set subject=?, content=? \n");
             sql.append("where id = ?");
             pstmt = conn.prepareStatement(sql.toString());
-            pstmt.setString(1, articleDto.getSubject());
-            pstmt.setString(2, articleDto.getContent());
-            pstmt.setLong(3, articleDto.getId());
+            pstmt.setString(1, article.getSubject());
+            pstmt.setString(2, article.getContent());
+            pstmt.setLong(3, article.getId());
             pstmt.executeUpdate();
         } finally {
             dbUtil.close(pstmt, conn);

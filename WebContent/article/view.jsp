@@ -33,7 +33,7 @@
 <!-- Navigation-->
 <nav class="shadow navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand fs-4" href="${root}">
+        <a class="navbar-brand fs-4" href="${root }">
             <!-- <img src="assets/img/navbar-logo.svg" alt="..." /> -->
             Let's Travel Well
         </a>
@@ -55,37 +55,46 @@
 </header>
 <!-- login section -->
 <section>
-    <div class="container" id="article-list-section">
+    <div class="container" id="article-view-section">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10 col-sm-12">
                 <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-                    <mark class="sky">글쓰기</mark>
+                    <mark class="sky">글보기</mark>
                 </h2>
             </div>
             <div class="col-lg-8 col-md-10 col-sm-12">
-                <form id="form-register" method="POST" action="">
-                    <input type="hidden" name="action" value="write">
-                    <div class="mb-3">
-                        <label for="subject" class="form-label">제목 : </label>
-                        <input
-                                type="text"
-                                class="form-control"
-                                id="subject"
-                                name="subject"
-                                placeholder="제목..."
-                        />
+                <div class="row my-2">
+                    <h2 class="text-secondary px-5">${article.id}. ${article.subject}</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="clearfix align-content-center">
+                            <img
+                                    class="avatar me-2 float-md-start bg-light p-2"
+                                    src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+                            />
+                            <p>
+                                <span class="fw-bold">${article.memberName}</span> <br />
+                                <span class="text-secondary fw-light"> ${article.createdDate} 조회 : ${article.hit} </span>
+                            </p>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="content" class="form-label">내용 : </label>
-                        <textarea class="form-control" id="content" name="content" rows="7"></textarea>
+<%--                    TODO : comment 생성하고 변경 해야되는 부분--%>
+                    <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
+                    <div class="divider mb-3"></div>
+                    <div class="text-secondary">
+                        ${article.content}
                     </div>
-                    <div class="col-auto text-center">
-                        <button type="button" id="btn-register" class="btn btn-outline-primary mb-3">
-                            글작성
+                    <div class="divider mt-3 mb-3"></div>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" id="btn-list" class="btn btn-outline-primary mb-3">
+                            글목록
                         </button>
-                        <button type="reset" class="btn btn-outline-danger mb-3">초기화</button>
+                        <button type="button" id="btn-mv-modify" class="btn btn-outline-success mb-3 ms-1">
+                            글수정
+                        </button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -124,19 +133,11 @@
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    document.querySelector("#btn-register").addEventListener("click", function () {
-        if (!document.querySelector("#subject").value) {
-            alert("제목 입력!!");
-            return;
-        } else if (!document.querySelector("#content").value) {
-            alert("내용 입력!!");
-            return;
-        } else {
-            let form = document.querySelector("#form-register");
-            console.log(form);
-            form.setAttribute("action", "/lets_travel_well_servlet/article");
-            form.submit();
-        }
+    document.querySelector("#btn-list").addEventListener("click", function () {
+        location.href = "${root}/article?action=list"
+    });
+    document.querySelector("#btn-mv-modify").addEventListener("click", function () {
+        location.href = "${root}/article?action=mvmodify&articleId=" + ${article.id};
     });
 </script>
 </body>

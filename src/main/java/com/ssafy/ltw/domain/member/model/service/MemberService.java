@@ -1,13 +1,17 @@
 package com.ssafy.ltw.domain.member.model.service;
 
-import com.ssafy.ltw.domain.member.model.MemberDto;
+import com.ssafy.ltw.domain.member.model.Member;
 
 public interface MemberService {
 	//id 중복검사
 	int idCheck(String userId) throws Exception;
 	// 회원가입
-	int joinMember(MemberDto memberDto) throws Exception;
+	int joinMember(Member member) throws Exception;
 	
 	// 로그인 
-	MemberDto loginMember(String loginId, String loginPw) throws Exception;
+	Member loginMember(String loginId, String loginPw) throws Exception;
+
+	Member findUserNameById(Long id) throws Exception;
+
+	long findIdByUserId(String userId) throws Exception;
 }

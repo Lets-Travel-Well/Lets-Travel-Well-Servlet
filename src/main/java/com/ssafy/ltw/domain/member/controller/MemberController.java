@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.ssafy.ltw.domain.member.model.MemberDto;
+import com.ssafy.ltw.domain.member.model.Member;
 import com.ssafy.ltw.domain.member.model.service.MemberService;
 import com.ssafy.ltw.domain.member.model.service.MemberServiceImpl;
 
@@ -71,10 +71,10 @@ public class MemberController extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userpwd");
 		try {
-			MemberDto memberDto = memberService.loginMember(userId, userPwd);
-			if(memberDto != null) {
+			Member member = memberService.loginMember(userId, userPwd);
+			if(member != null) {
 				HttpSession session = request.getSession();
-				session.setAttribute("userinfo", memberDto);
+				session.setAttribute("userinfo", member);
 				
 				String idsave = request.getParameter("saveid");
 				if("ok".equals(idsave)) { //아이디 저장을 체크 했다면.
@@ -126,7 +126,7 @@ public class MemberController extends HttpServlet {
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
 		
-		MemberDto member = new MemberDto();
+		Member member = new Member();
 		member.setUsername(userName);
 		member.setLoginId(loginId);
 		member.setLoginPw(loginPw);
