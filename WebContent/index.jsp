@@ -45,7 +45,7 @@
     <div class="container">
       <div class="masthead-subheading">Wherever You Go</div>
       <div class="masthead-heading text-uppercase">Let's Travel WELL</div>
-      <a class="btn btn-primary btn-xl text-uppercase" href="./search_place.html#search-place">Search Place</a>
+      <a class="btn btn-primary btn-xl text-uppercase" href="${root}/attraction?action=mvsearch#search-place">Search Place</a>
     </div>
   </header>
 
