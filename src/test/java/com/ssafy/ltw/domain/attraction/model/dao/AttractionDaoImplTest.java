@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.ssafy.ltw.domain.attraction.AttractionInfo;
+import com.ssafy.ltw.domain.attraction.model.AttractionInfo;
 import com.ssafy.ltw.domain.attraction.model.dao.AttractionDao;
 import com.ssafy.ltw.domain.attraction.model.dao.AttractionDaoImpl;
 
