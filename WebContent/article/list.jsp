@@ -72,13 +72,13 @@
                             class="form-select form-select-sm ms-5 me-1 w-50"
                             aria-label="검색조건"
                     >
-                        <option selected>검색조건</option>
+                        <option value="">검색조건</option>
                         <option value="id">글번호</option>
                         <option value="subject">제목</option>
                         <option value="content">내용</option>
                     </select>
                     <div class="input-group input-group-sm">
-                        <input type="text" name="word" id="word" class="form-control" placeholder="검색어..." />
+                        <input type="text" name="word" id="word" class="form-control" value="${word}" placeholder="검색어..." />
                         <button id="btn-search" class="btn btn-dark" type="button">검색</button>
                     </div>
                 </form>
@@ -189,6 +189,15 @@
         form.setAttribute("action", "${root}/article");
         form.submit();
     });
+
+    // select 요소 가져오기
+    var selectElement = document.getElementById("key");
+
+    // option 요소 중 value가 "subject"인 요소의 인덱스를 가져오기
+    var optionIndex = Array.from(selectElement.options).findIndex(option => option.value === "${key}");
+
+    // 해당 인덱스를 selectedIndex 속성으로 설정하여 해당 option을 선택하도록 함
+    selectElement.selectedIndex = optionIndex;
 </script>
 </body>
 

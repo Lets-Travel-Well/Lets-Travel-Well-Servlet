@@ -108,7 +108,9 @@ public class ArticleController extends HttpServlet {
                     list.add(articleDto);
                 }
                 request.setAttribute("articles", list);
-
+                request.setAttribute("word", word);
+                request.setAttribute("key", key);
+                System.out.println(key);
                 PageNavigation pageNavigation = articleService.makePageNavigation(map);
                 request.setAttribute("navigation", pageNavigation);
                 return "/article/list.jsp" + queryStrig;
