@@ -7,6 +7,7 @@ import com.ssafy.ltw.domain.article.model.service.ArticleServiceImpl;
 import com.ssafy.ltw.domain.member.model.Member;
 import com.ssafy.ltw.domain.member.model.service.MemberService;
 import com.ssafy.ltw.domain.member.model.service.MemberServiceImpl;
+import com.ssafy.ltw.global.util.page.PageNavigation;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -17,8 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/article")
 public class ArticleController extends HttpServlet {
@@ -27,6 +31,10 @@ public class ArticleController extends HttpServlet {
     private ArticleService articleService;
     private MemberService memberService;
 
+    private int pgno;
+    private String key;
+    private String word;
+    private String queryStrig;
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -36,6 +44,11 @@ public class ArticleController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        pgno = ParameterCheck.notNumberToOne(request.getParameter("pgno"));
+        key = ParameterCheck.nullToBlank(request.getParameter("key"));
+        word = ParameterCheck.nullToBlank(request.getParameter("word"));
+        queryStrig = "?pgno=" + pgno + "&key=" + key + "&word=" + URLEncoder.encode(word, "utf-8");
+
         System.out.println("doGet");
         String action = request.getParameter("action");
         String path = "";
@@ -89,6 +102,14 @@ public class ArticleController extends HttpServlet {
                     list.add(articleDto);
                 }
                 request.setAttribute("articles", list);
+
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("pgno", pgno + "");
+                map.put("key", key);
+                map.put("word", word);
+
+                PageNavigation pageNavigation = articleService.makePageNavigation(map);
+                request.setAttribute("navigation", pageNavigation);
                 return "/article/list.jsp";
             } catch (Exception e) {
                 e.printStackTrace();
