@@ -85,6 +85,9 @@
                         <button type="button" id="btn-modify" class="btn btn-outline-primary mb-3">
                             수정하기
                         </button>
+                        <button type="button" id="btn-delete" class="btn btn-outline-danger mb-3 ms-1">
+                            글삭제
+                        </button>
                         <button type="reset" id="btn-view" class="btn btn-outline-danger mb-3">뒤로가기</button>
                     </div>
                 </form>
@@ -144,6 +147,10 @@
     document.querySelector("#btn-view").addEventListener("click", function () {
         location.href = "${root}/article?action=view&articleId=" + ${article.id};
     });
+    document.querySelector("#btn-delete").addEventListener("click", function () {
+        location.href = "${root}/article?action=delete&articleId=" + ${article.id};
+    });
+
 </script>
 </body>
 

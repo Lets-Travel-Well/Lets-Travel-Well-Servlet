@@ -93,9 +93,6 @@
                         <button type="button" id="btn-mv-modify" class="btn btn-outline-success mb-3 ms-1">
                             글수정
                         </button>
-                        <button type="button" id="btn-delete" class="btn btn-outline-danger mb-3 ms-1">
-                            글삭제
-                        </button>
                     </div>
                 </div>
             </div>

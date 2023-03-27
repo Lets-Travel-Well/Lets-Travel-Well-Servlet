@@ -197,16 +197,10 @@ public class ArticleController extends HttpServlet {
         // TODO : 글삭제 완료 후 list.jsp로 이동.(이후의 프로세스를 생각해 보세요.)
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("userinfo");
-        System.out.println(member.toString());
+        System.out.println("delete");
         if (member != null) {
             try {
-                Article article = new Article().builder()
-                        .subject(request.getParameter("subject"))
-                        .content(request.getParameter("content"))
-                        .memberId(memberService.findIdByUserId(member.getLoginId()))
-                        .build();
-                System.out.println(article);
-                articleService.writeArticle(article);
+                articleService.deleteArticle(Long.parseLong(request.getParameter("articleId")));
                 return "/article?action=list";
             } catch (Exception e) {
                 e.printStackTrace();
