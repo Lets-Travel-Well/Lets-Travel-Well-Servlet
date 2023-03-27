@@ -98,9 +98,12 @@ public class ArticleDaoImpl implements ArticleDao {
                 if("subject".equals(key)) {
                     sql.append("where subject like concat('%', ?, '%') \n");
                 }
-//                else {
-//                    sql.append("where ").append(key).append(" = ? \n");
-//                }
+                else if("id".equals(key)) {
+                    sql.append("where id").append(" = ? \n");
+                }
+                else if("content".equals(key)){
+                    sql.append("where content like concat('%', ?, '%') \n");
+                }
             }
             sql.append("order by id desc \n");
             sql.append("limit ?, ?");
@@ -200,9 +203,12 @@ public class ArticleDaoImpl implements ArticleDao {
                 if("subject".equals(key)) {
                     sql.append("where subject like concat('%', ?, '%') \n");
                 }
-//                else {
-//                    sql.append("where ").append(key).append(" = ? \n");
-//                }
+                else if("id".equals(key)) {
+                    sql.append("where id").append(" = ? \n");
+                }
+                else if("content".equals(key)){
+                    sql.append("where content like concat('%', ?, '%') \n");
+                }
             }
             pstmt = conn.prepareStatement(sql.toString());
             if(!key.isEmpty() && !word.isEmpty())
