@@ -57,7 +57,7 @@
             return;
           }
 
-          let name = document.getElementById("memberName").value;
+          let name = document.getElementById("username").value;
           let loginId = document.getElementById("loginId").value;
           let loginPw = document.getElementById("loginPw").value;
           let email = document.getElementById("email").value;

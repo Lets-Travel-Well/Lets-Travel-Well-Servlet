@@ -162,4 +162,27 @@ public class MemberDaoImpl implements MemberDao{
 		}
 		return findId;
 	}
+
+	@Override
+	public void modifyMember(Member member) throws SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = dbUtil.getConnection();
+			StringBuilder join = new StringBuilder();
+			join.append("update member \n");
+			join.append("set username = ?, email = ?, phone= ? \n");
+			join.append("where login_id = ?");
+			
+			pstmt = conn.prepareStatement(join.toString());
+			pstmt.setString(1, member.getUsername());
+			pstmt.setString(2, member.getEmail());
+			pstmt.setString(3, member.getPhone());
+			pstmt.setString(4, member.getLoginId());
+			
+			pstmt.executeUpdate();
+		} finally {
+			dbUtil.close(pstmt, conn);
+		}
+	}
 }
