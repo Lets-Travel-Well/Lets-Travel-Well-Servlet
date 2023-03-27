@@ -54,9 +54,11 @@ public class ArticleController extends HttpServlet {
             path = write(request, response);
             redirect(request, response, path);
         } else if ("mvmodify".equals(action)) {
+            System.out.println("mvmodify");
             path = mvModify(request, response);
             forward(request, response, path);
         } else if ("modify".equals(action)) {
+            System.out.println("modify");
             path = modify(request, response);
             forward(request, response, path);
         } else if ("delete".equals(action)) {
@@ -143,21 +145,75 @@ public class ArticleController extends HttpServlet {
     private String mvModify(HttpServletRequest request, HttpServletResponse response) {
         // TODO : 수정하고자하는 글의 글번호를 얻는다.
         // TODO : 글번호에 해당하는 글정보를 얻고 글정보를 가지고 modify.jsp로 이동.
-        return null;
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("userinfo");
+        if (member != null) {
+            long articleId = Integer.parseInt(request.getParameter("articleId"));
+            try {
+                Article article = articleService.getArticle(articleId);
+                Member findMember = memberService.findUserNameById(article.getMemberId());
+                ArticleDto articleDto = new ArticleDto(article, findMember);
+                request.setAttribute("article", articleDto);
+
+                return "/article/modify.jsp";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "/index.jsp";
+            }
+        } else
+            return "/user/login.jsp";
     }
 
     private String modify(HttpServletRequest request, HttpServletResponse response) {
         // TODO : 수정 할 글정보를 얻고 BoardDto에 set.
         // TODO : boardDto를 파라미터로 service의 modifyArticle() 호출.
         // TODO : 글수정 완료 후 view.jsp로 이동.(이후의 프로세스를 생각해 보세요.)
-        return null;
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("userinfo");
+        System.out.println(member.toString());
+        if (member != null) {
+            try {
+                System.out.println(memberService.findIdByUserId(member.getLoginId()));
+                Article article = new Article().builder()
+                        .id(Long.parseLong(request.getParameter("articleId")))
+                        .subject(request.getParameter("subject"))
+                        .content(request.getParameter("content"))
+                        .memberId(memberService.findIdByUserId(member.getLoginId()))
+                        .build();
+                System.out.println(article);
+                articleService.modifyArticle(article);
+                return "/article?action=list";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "/index.jsp";
+            }
+        } else
+            return "/user/login.jsp";
     }
 
     private String delete(HttpServletRequest request, HttpServletResponse response) {
         // TODO : 삭제할 글 번호를 얻는다.
         // TODO : 글번호를 파라미터로 service의 deleteArticle()을 호출.
         // TODO : 글삭제 완료 후 list.jsp로 이동.(이후의 프로세스를 생각해 보세요.)
-        return null;
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("userinfo");
+        System.out.println(member.toString());
+        if (member != null) {
+            try {
+                Article article = new Article().builder()
+                        .subject(request.getParameter("subject"))
+                        .content(request.getParameter("content"))
+                        .memberId(memberService.findIdByUserId(member.getLoginId()))
+                        .build();
+                System.out.println(article);
+                articleService.writeArticle(article);
+                return "/article?action=list";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "/index.jsp";
+            }
+        } else
+            return "/user/login.jsp";
     }
 
     private void forward(HttpServletRequest request, HttpServletResponse response, String path) throws ServletException, IOException {
