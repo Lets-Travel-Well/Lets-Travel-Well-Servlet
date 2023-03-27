@@ -82,7 +82,7 @@ public class ArticleDaoImpl implements ArticleDao {
         return findArticle;
     }
     @Override
-    public List<Article> listArticle() throws SQLException {
+    public List<Article> listArticle(Map<String, Object> param) throws SQLException {
         List<Article> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -92,9 +92,28 @@ public class ArticleDaoImpl implements ArticleDao {
             StringBuilder sql = new StringBuilder();
             sql.append("select * \n");
             sql.append("from article \n");
+            String key = (String) param.get("key");
+            String word = (String) param.get("word");
+            if(!key.isEmpty() && !word.isEmpty()) {
+                if("subject".equals(key)) {
+                    sql.append("where subject like concat('%', ?, '%') \n");
+                }
+                else if("id".equals(key)) {
+                    sql.append("where id").append(" = ? \n");
+                }
+                else if("content".equals(key)){
+                    sql.append("where content like concat('%', ?, '%') \n");
+                }
+            }
+            sql.append("order by id desc \n");
+            sql.append("limit ?, ?");
             pstmt = conn.prepareStatement(sql.toString());
+            int idx = 0;
+            if(!key.isEmpty() && !word.isEmpty())
+                pstmt.setString(++idx, word);
+            pstmt.setInt(++idx, (Integer) param.get("start"));
+            pstmt.setInt(++idx, (Integer) param.get("listsize"));
             rs = pstmt.executeQuery();
-
             while(rs.next()) {
                 Article findArticle = new Article().builder()
                         .id(rs.getLong("id"))
@@ -169,7 +188,39 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public int getTotalArticleCount(Map<String, Object> param) throws SQLException {
-        return 0;
+        int cnt = 0;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("select count(id) \n");
+            sql.append("from article \n");
+            String key = (String) param.get("key");
+            String word = (String) param.get("word");
+            if(!key.isEmpty() && !word.isEmpty()) {
+                if("subject".equals(key)) {
+                    sql.append("where subject like concat('%', ?, '%') \n");
+                }
+                else if("id".equals(key)) {
+                    sql.append("where id").append(" = ? \n");
+                }
+                else if("content".equals(key)){
+                    sql.append("where content like concat('%', ?, '%') \n");
+                }
+            }
+            pstmt = conn.prepareStatement(sql.toString());
+            if(!key.isEmpty() && !word.isEmpty())
+                pstmt.setString(1, word);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                cnt = rs.getInt(1);
+            }
+        } finally {
+            dbUtil.close(rs, pstmt, conn);
+        }
+        return cnt;
     }
 
     @Override
