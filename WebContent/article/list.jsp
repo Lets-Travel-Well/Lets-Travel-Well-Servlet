@@ -82,7 +82,7 @@
                             </form>
                         </div>
                     </div>
-                    <table class="table table-hover shadow	">
+                    <table class="table table-hover shadow rounded">
                         <thead>
                             <tr class="text-center table-warning">
                                 <th scope="col">글번호</th>
