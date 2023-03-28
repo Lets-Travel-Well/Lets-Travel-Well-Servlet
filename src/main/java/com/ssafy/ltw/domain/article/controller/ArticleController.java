@@ -170,16 +170,23 @@ public class ArticleController extends HttpServlet {
         // TODO : 수정하고자하는 글의 글번호를 얻는다.
         // TODO : 글번호에 해당하는 글정보를 얻고 글정보를 가지고 modify.jsp로 이동.
         HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute("userinfo");
-        if (member != null) {
+        Member loginMember = (Member) session.getAttribute("userinfo");
+        if (loginMember != null) {
             long articleId = Integer.parseInt(request.getParameter("articleId"));
             try {
                 Article article = articleService.getArticle(articleId);
                 Member findMember = memberService.findUserNameById(article.getMemberId());
+                System.out.println(loginMember);
+                System.out.println(findMember);
+                if(!loginMember.getLoginId().equals(findMember.getLoginId())){
+                    request.setAttribute("msg", "해당글의 작성자가 아닙니다.");
+                    return "/error/error.jsp";
+                }
+
                 ArticleDto articleDto = new ArticleDto(article, findMember);
                 request.setAttribute("article", articleDto);
-
                 return "/article/modify.jsp";
+
             } catch (Exception e) {
                 e.printStackTrace();
                 return "/index.jsp";
@@ -189,20 +196,23 @@ public class ArticleController extends HttpServlet {
     }
 
     private String modify(HttpServletRequest request, HttpServletResponse response) {
-        // TODO : 수정 할 글정보를 얻고 BoardDto에 set.
-        // TODO : boardDto를 파라미터로 service의 modifyArticle() 호출.
-        // TODO : 글수정 완료 후 view.jsp로 이동.(이후의 프로세스를 생각해 보세요.)
         HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute("userinfo");
-        System.out.println(member.toString());
-        if (member != null) {
+        Member loginMember = (Member) session.getAttribute("userinfo");
+        System.out.println(loginMember.toString());
+        if (loginMember != null) {
             try {
-                System.out.println(memberService.findIdByUserId(member.getLoginId()));
+                long articleId = Integer.parseInt(request.getParameter("articleId"));
+                Article findArticle = articleService.getArticle(articleId);
+                Member findMember = memberService.findUserNameById(findArticle.getMemberId());
+                if(!loginMember.getLoginId().equals(findMember.getLoginId())){
+                    request.setAttribute("msg", "해당글의 작성자가 아닙니다.");
+                    return "/error/error.jsp";
+                }
                 Article article = new Article().builder()
                         .id(Long.parseLong(request.getParameter("articleId")))
                         .subject(request.getParameter("subject"))
                         .content(request.getParameter("content"))
-                        .memberId(memberService.findIdByUserId(member.getLoginId()))
+                        .memberId(memberService.findIdByUserId(loginMember.getLoginId()))
                         .build();
                 System.out.println(article);
                 articleService.modifyArticle(article);
@@ -216,14 +226,18 @@ public class ArticleController extends HttpServlet {
     }
 
     private String delete(HttpServletRequest request, HttpServletResponse response) {
-        // TODO : 삭제할 글 번호를 얻는다.
-        // TODO : 글번호를 파라미터로 service의 deleteArticle()을 호출.
-        // TODO : 글삭제 완료 후 list.jsp로 이동.(이후의 프로세스를 생각해 보세요.)
         HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute("userinfo");
+        Member loginMember = (Member) session.getAttribute("userinfo");
         System.out.println("delete");
-        if (member != null) {
+        if (loginMember != null) {
             try {
+                long articleId = Integer.parseInt(request.getParameter("articleId"));
+                Article findArticle = articleService.getArticle(articleId);
+                Member findMember = memberService.findUserNameById(findArticle.getMemberId());
+                if(!loginMember.getLoginId().equals(findMember.getLoginId())){
+                    request.setAttribute("msg", "해당글의 작성자가 아닙니다.");
+                    return "/error/error.jsp";
+                }
                 articleService.deleteArticle(Long.parseLong(request.getParameter("articleId")));
                 return "/article?action=list";
             } catch (Exception e) {
