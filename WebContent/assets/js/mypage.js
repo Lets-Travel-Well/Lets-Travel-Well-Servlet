@@ -1,4 +1,4 @@
-var root = "/lets_travel_well_servlet"
+var root = "/ltw"
 document.getElementById("modify-button").addEventListener("click", function () {
     // 버튼 클릭
     let form = document.getElementById("form-modify");
