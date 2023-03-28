@@ -1,7 +1,7 @@
         // 아이디 중복 버튼 클릭시 => controller 호출 => /member?action=idCheck&userId=?
         var userid = document.getElementById("loginId");
         var idCheck = false;
-        var root = "/lets_travel_well_servlet"
+        var root = "/ltw"
         
         document.getElementById("idCheck").addEventListener("click", () => {
         	var url = root + "/member?action=idCheck&userid=" + userid.value;
