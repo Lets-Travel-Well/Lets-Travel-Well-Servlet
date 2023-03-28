@@ -19,6 +19,7 @@ public class ArticleDto {
     private int hit;
 
     private Long memberId;
+    private String loginId;
     private String memberName;
 
     public ArticleDto(Article article, Member member){
@@ -28,6 +29,7 @@ public class ArticleDto {
         this.content = article.getContent();
         this.hit = article.getHit();
         this.memberId = member.getId();
+        this.loginId = member.getLoginId();
         this.memberName = member.getUsername();
     }
 }

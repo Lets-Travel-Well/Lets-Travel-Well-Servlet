@@ -90,6 +90,9 @@
                         <button type="button" id="btn-list" class="btn btn-outline-primary mb-3">
                             글목록
                         </button>
+                        <div>${userinfo.loginId }</div>
+                        <di>${article.loginId}</di>
+                        <div></div>
                         <button type="button" id="btn-mv-modify" class="btn btn-outline-success mb-3 ms-1">
                             글수정
                         </button>
