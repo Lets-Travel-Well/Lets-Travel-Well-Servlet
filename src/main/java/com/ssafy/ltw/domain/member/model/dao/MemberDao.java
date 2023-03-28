@@ -13,4 +13,6 @@ public interface MemberDao {
 	Member findUserNameById(Long id) throws SQLException;
 
     long findIdByUserId(String userId) throws SQLException;
+    
+    void modifyMember(Member member) throws SQLException;
 }
