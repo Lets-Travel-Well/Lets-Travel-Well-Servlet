@@ -1,4 +1,4 @@
-var root = "/lets_travel_well_servlet"; 
+var root = "/ltw";
 let sel = document.getElementById("search-sigun");
 function makeOptionForSigun(data) {
   let option = "";

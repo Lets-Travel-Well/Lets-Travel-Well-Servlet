@@ -106,6 +106,13 @@
           </div>
         </div>
       </section>
+
+      <c:if test="${not empty msg}">
+        <script>
+          alert("${msg}");
+        </script>
+      </c:if>
+
       <!-- Footer-->
       <footer class="footer py-4">
         <div class="container">

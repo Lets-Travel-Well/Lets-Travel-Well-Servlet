@@ -140,7 +140,7 @@
         } else {
             let form = document.querySelector("#form-register");
             console.log(form);
-            form.setAttribute("action", "/lets_travel_well_servlet/article");
+            form.setAttribute("action", "/ltw/article");
             form.submit();
         }
     });

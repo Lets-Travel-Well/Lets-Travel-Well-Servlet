@@ -1,10 +1,12 @@
-package com.ssafy.ltw.global.util;
+package com.ssafy.ltw.global.util.page;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class PageNavigation {
 
     private boolean startRange; // 현재 페이지가 이전이 눌려지지 않는 범위의 페이지 체크

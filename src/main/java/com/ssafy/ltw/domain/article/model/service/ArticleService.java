@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssafy.ltw.domain.article.model.Article;
-import com.ssafy.ltw.global.util.PageNavigation;
+import com.ssafy.ltw.global.util.page.PageNavigation;
 
 public interface ArticleService {
 
     int writeArticle(Article article) throws Exception;
-    List<Article> listArticle() throws Exception;
+    List<Article> listArticle(Map<String, String> map) throws Exception;
     PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
     Article getArticle(Long id) throws Exception;
     void updateHit(Long id) throws Exception;

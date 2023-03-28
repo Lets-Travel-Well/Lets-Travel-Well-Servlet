@@ -1,4 +1,4 @@
-var root = "/lets_travel_well_servlet";
+var root = "/ltw";
 document.getElementById("login-button").addEventListener("click", () => {
     let loginId = document.getElementById("loginId");
     let loginPw = document.getElementById("loginPw");

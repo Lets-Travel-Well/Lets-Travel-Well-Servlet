@@ -67,7 +67,9 @@
                         </div>
                         <div class="col-md-7 offset-3">
                             <form class="d-flex ">
-                                <select id="key" class="font-weight-bold shadow-sm form-select form-select-sm ms-5 me-1 w-50" aria-label="검색조건">
+                                <select id="key"
+                                    class="font-weight-bold shadow-sm form-select form-select-sm ms-5 me-1 w-50"
+                                    aria-label="검색조건">
                                     <option selected>검색조건</option>
                                     <option value="articleno">글번호</option>
                                     <option value="subject">제목</option>

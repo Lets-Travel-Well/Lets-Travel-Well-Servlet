@@ -14,4 +14,6 @@ public interface MemberService {
 	Member findUserNameById(Long id) throws Exception;
 
 	long findIdByUserId(String userId) throws Exception;
+	
+	void modifyMember(Member member) throws Exception;
 }
