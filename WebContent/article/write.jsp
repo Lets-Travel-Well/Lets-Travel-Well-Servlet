@@ -64,38 +64,7 @@
                     <div class="masthead-subheading">Wherever You Go</div>
                 </div>
             </header>
-            <!-- login section -->
-            <!-- <section>
-                <div class="container" id="article-list-section">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8 col-md-10 col-sm-12">
-                            <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-                                <mark class="sky">글쓰기</mark>
-                            </h2>
-                        </div>
-                        <div class="col-lg-8 col-md-10 col-sm-12">
-                            <form id="form-register" method="POST" action="">
-                                <input type="hidden" name="action" value="write">
-                                <div class="mb-3">
-                                    <label for="subject" class="form-label">제목 : </label>
-                                    <input type="text" class="form-control" id="subject" name="subject"
-                                        placeholder="제목..." />
-                                </div>
-                                <div class="mb-3">
-                                    <label for="content" class="form-label">내용 : </label>
-                                    <textarea class="form-control" id="content" name="content" rows="7"></textarea>
-                                </div>
-                                <div class="col-auto text-center">
-                                    <button type="button" id="btn-register" class="btn shadow btn-outline-primary mb-3">
-                                        글작성
-                                    </button>
-                                    <button type="reset" class="btn btn-outline-danger shadow mb-3">초기화</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </section> -->
+
             <section>
                 <div class="container" id="mypage-section">
                     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -189,7 +158,7 @@
                     } else {
                         let form = document.querySelector("#form-register");
                         console.log(form);
-                        form.setAttribute("action", "/ltw/article");
+                        form.setAttribute("action", "${root}/article");
                         form.submit();
                     }
                 });
