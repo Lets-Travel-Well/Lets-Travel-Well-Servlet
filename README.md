@@ -1,4 +1,4 @@
-# 🚢 Lets-Travel-Well-Front 🚗
+# 🚢 Lets-Travel-Well-Servlet 🚗
 
 ✈ 사용자 기반 추천을 통해 한국의 다양한 관광지, 먹거리, 축제, 행사 등을 검색할 수 있는 추천 기반 지역 관광 소개 페이지 ✈
 
@@ -24,13 +24,15 @@ Lets Travel Well 사이트의 추구하는 목적과 세부 설명을 담고 있
 ## ✅ Sign Up Page
 
 사용자의 이름, 아이디, 비밀번호, 비밀번호 확인을 입력받아서 회원가입하는 페이집니다.
+
 - 아이디의 check 버튼으로 아이디 중복 확인을 할 수 있습니다.
 - 전화번호는 Format을 지켜서 입력해야합니다.
-![회원가입](./docs/img/signup.png)
+  ![회원가입](./docs/img/signup.png)
 
 ## ✅ My page
 
 사용자의 이름, 아이디를 나타내는 마이페이지입니다.
+
 - Modify 버튼 클릭시 회원 정보를 수정할 수 있습니다.
 
 ![내정보](./docs/img/mypage.png)
@@ -38,17 +40,34 @@ Lets Travel Well 사이트의 추구하는 목적과 세부 설명을 담고 있
 ## ✅ Community Page
 
 사용자들이 작성한 게시글을 조회할 수 있는 페이지입니다.
+
 - 페이지네이션 적용으로 한 페이지당 20개의 게시글을 볼 수 있습니다.
 - 글번호, 제목, 작성자를 조건으로 검색을 할 수 있습니다.
 - 클릭시 해당 게시글의 상세 정보를 볼 수 있습니다.
 
+![커뮤니티리스트](./docs/img/communitylist.png)
+
 ## ✅ Community View Page
 
 게시글 상세 정보를 보여주는 페이지입니다.
+
 - 로그인한 사용자와 글을 작성한 사용자가 일치하면 수정페이지로 갈 수 있습니다.
+
+![커뮤니티뷰](./docs/img/communityview.png)
+
+## ✅ Community Write Page
+
+게시글을 삭제할 수 있는 페이지입니다.
+
+- 게시글의 제목과 내용을 입력하여서 새로운 글을 등록할 수 있습니다.
+
+![커뮤니티수정](./docs/img/communitywrite.png)
 
 ## ✅ Community Modify Page
 
 게시글을 수정할 수 있는 페이지입니다.
+
 - 로그인한 사용자와 글을 작성한 사용자가 일치하면 수정을 할 수 있습니다.
 - 로그인한 사용자와 글을 작성한 사용자가 일치하면 삭제를 할 수 있습니다.
+
+![커뮤니티수정](./docs/img/communitymodify.png)
