@@ -75,7 +75,7 @@
                                         <div class="container" id="article-list-section">
                                             <div class="row justify-content-center">
                                                 <div class="col-lg-8 col-md-10 col-sm-12">
-                                                    <h2 class="bg-primary text-white my-3 py-3 shadow-sm  text-center">
+                                                    <h2 class="border border-warning rounded my-3 py-3 shadow-sm  text-center">
                                                         글쓰기
                                                     </h2>
                                                 </div>
