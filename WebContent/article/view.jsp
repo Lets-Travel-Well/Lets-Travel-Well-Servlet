@@ -90,12 +90,11 @@
                         <button type="button" id="btn-list" class="btn btn-outline-primary mb-3">
                             글목록
                         </button>
-                        <div>${userinfo.loginId }</div>
-                        <di>${article.loginId}</di>
-                        <div></div>
+                        <c:if test="${userinfo.loginId eq article.loginId}">
                         <button type="button" id="btn-mv-modify" class="btn btn-outline-success mb-3 ms-1">
                             글수정
                         </button>
+                        </c:if>
                     </div>
                 </div>
             </div>
