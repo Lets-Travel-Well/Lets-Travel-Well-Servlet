@@ -69,10 +69,9 @@ function makeShortesPathToMap(data) {
 
     for (var j = 0; j < positions.length; j++) {
         var content = '<div class="customoverlay">' +
-            '<div class="bg-primary">' +
+            '<a>' +
             ' <span id="numbers">' + (j + 1) + '</span> <span class="title">' + positions[j].title + '</span>' +
-            '</div>' +
-
+            '</a>' +
             '</div>';
         addText(markerList[j].getPosition(), content);
     }
@@ -85,7 +84,7 @@ function addText(pos, con) {
         map: map,
         position: pos,
         content: con,
-        yAnchor: 1
+        yAnchor: 0.3
     });
     overLays.push(customOverlay);
 }
@@ -94,11 +93,17 @@ function displayMarker() {
         markerList[i].setMap(null);
     }
     markerList = [];
+    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+    var imageSize = new kakao.maps.Size(20, 28);
+    //var imageOption = { offset: new kakao.maps.Point(27, 69) };
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
     for (var i = 0; i < positions.length; i++) {
         
         let marker = new kakao.maps.Marker({
             map: map, // 마커를 표시할 지도
             position: positions[i].latlng, // 마커를 표시할 위치
+            image: markerImage,
+            
         });
 
         markerList[i] = marker; 

@@ -33,6 +33,13 @@
       <!-- Core theme CSS (includes Bootstrap)-->
       <link href="${root}/assets/css/style.css" rel="stylesheet" />
       <link href="${root}/assets/css/map.css" rel="stylesheet" />
+    <style>
+		.customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
+		.customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+		.customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #ffc61a; no-repeat right 14px center;}
+		.customoverlay .title {display:block;text-align:center;background:#fff;padding:5px 10px;font-size:14px;font-weight:bold;}
+		.customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+	</style>
     </head>
 
     <body id="page-top">
