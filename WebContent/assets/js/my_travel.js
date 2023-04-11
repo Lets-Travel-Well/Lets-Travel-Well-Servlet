@@ -4,7 +4,7 @@ var root = "/ltw";
  var mapContainer = document.getElementById("map"), // 지도를 표시할 div
      mapOption = {
      center: new kakao.maps.LatLng(37.500613, 127.036431), // 지도의 중심좌표
-     level: 5, // 지도의 확대 레벨
+     level: 7, // 지도의 확대 레벨
  };
 
  var map = new kakao.maps.Map(mapContainer, mapOption);
@@ -40,37 +40,44 @@ document.getElementById("find-button").addEventListener("click",() => {
 });
 
 var overLay = [];
-var markers = [];
+
+var positions;
 function makeShortesPathToMap(data) {
     console.log(data);
-    markers = [];
+    positions = [];
     data.forEach((area) => {
+        console.log(area);
         let markerInfo = {
-            contentId: area.contentId,
-            like: area.scrap,
+            contentId: area.attractionInfoId,
             title: area.title,
             addr1: area.addr1,
             zipcode: area.zipcode,
             firstImage: area.firstImage,
             latlng: new kakao.maps.LatLng(area.latitude, area.longitude),
         }
-        let marker = new kakao.maps.Marker({
-            map: map,
-            positions: markerInfo.latlng,
-        });
-        markers.push(marker);
+
+        positions.push(markerInfo);
     });
         
-    for (var i = 0; i < overLay.length; i++) {
-        overLay[i].setMap(null);
-    }
-
-    overLay = [];
-    addLine(markers);
-
-
-	
+    displayMarker();
 }
+
+var markerList;
+function displayMarker() {
+    markerList = [];
+    for (var i = 0; i < positions.length; i++) {
+        
+        let marker = new kakao.maps.Marker({
+            map: map, // 마커를 표시할 지도
+            position: positions[i].latlng, // 마커를 표시할 위치
+        });
+
+        markerList[i] = marker; 
+    }
+    map.setCenter(positions[0].latlng);
+}
+
+
 
 var lines = [];
 function addLine(markers) {
@@ -79,7 +86,7 @@ function addLine(markers) {
         linePath.push(markers[i].getPosition());
     }
 
-    var polyline = new kakao.maps.polyline({
+    var polyline = new kakao.maps.Polyline({
         path: linePath,
         strokeWeight: 2,
         strokeColor: 'red',
