@@ -106,9 +106,9 @@ function displayMarker() {
     });
     
     let content = '<div class="wrap">' + 
-      '    <div class="info">' + 
+      '    <div class="info  shadow ">' + 
       '        <div class="bg-primary ">' +
-      '        		<div class="text-light h5 p-1 d-flex justify-content-between">' + 
+      '        		<div class="text-light font-weight-bold p-1 d-flex justify-content-between">' + 
       					positions[i].title +
       '         		<div class="far fa-times-circle fa-lg" onclick="closeOverlay('+i+')" title="닫기"></div>' + 
       '        		</div>'+
@@ -119,7 +119,10 @@ function displayMarker() {
       '           </div>' + 
       '            <div class="desc">' + 
       '                <div class="ellipsis">'+positions[i].addr1+'</div>' + 
-      '                <div class="jibun ellipsis">(우)'+positions[i].zipcode+'</div>' + 
+      '                <div class="jibun ellipsis">(우)'+positions[i].zipcode+'</div>' +
+      '                <div class="d-flex justify-content-end">' + 
+      '				   <button id="btn-scrap" class="btn btn-outline-warning d-flex justify-content-center p-1 m-2" type="button"> like </button>' +
+      '                </div>' + 
       '            </div>' + 
       '        </div>' + 
       '    </div>' +    
