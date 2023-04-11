@@ -39,8 +39,8 @@ document.getElementById("find-button").addEventListener("click",() => {
     
 });
 
-var overLay = [];
-
+var overLays = [];
+var markerList= [];
 var positions;
 function makeShortesPathToMap(data) {
     console.log(data);
@@ -60,10 +60,39 @@ function makeShortesPathToMap(data) {
     });
         
     displayMarker();
+
+    for (var i = 0; i < overLays.length; i++) {
+        overLays[i].setMap(null);   
+    }
+    overLays = [];
+    addLine(markerList);
+
+    for (var j = 0; j < positions.length; j++) {
+        var content = '<div class="customoverlay">' +
+            '<div class="bg-primary">' +
+            ' <span id="numbers">' + (j + 1) + '</span> <span class="title">' + positions[j].title + '</span>' +
+            '</div>' +
+
+            '</div>';
+        addText(markerList[j].getPosition(), content);
+    }
+
+
 }
 
-var markerList;
+function addText(pos, con) {
+    var customOverlay = new kakao.maps.CustomOverlay({
+        map: map,
+        position: pos,
+        content: con,
+        yAnchor: 1
+    });
+    overLays.push(customOverlay);
+}
 function displayMarker() {
+    for (var i = 0; i < markerList.length; i++) {
+        markerList[i].setMap(null);
+    }
     markerList = [];
     for (var i = 0; i < positions.length; i++) {
         
@@ -77,11 +106,14 @@ function displayMarker() {
     map.setCenter(positions[0].latlng);
 }
 
-
+	
 
 var lines = [];
 function addLine(markers) {
     var linePath = [];
+    for (let i = 0; i < lines.length; i++) {
+        lines[i].setMap(null);
+    }
     for (let i = 0; i < markers.length; i++) {
         linePath.push(markers[i].getPosition());
     }
@@ -94,6 +126,6 @@ function addLine(markers) {
         strokeStlye: 'solid'
     });
 
-    lines.push(polyline);
     polyline.setMap(map);
+    lines.push(polyline);
 }
