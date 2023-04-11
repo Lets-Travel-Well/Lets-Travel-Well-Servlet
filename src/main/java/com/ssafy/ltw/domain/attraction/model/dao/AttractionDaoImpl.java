@@ -112,6 +112,7 @@ public class AttractionDaoImpl implements AttractionDao{
          // title, addr1, zipcode, first_image, latitude, longitude, 
             while(rs.next()) {
             	AttractionInfo attractionInfo = new AttractionInfo().builder()
+            			.contentId(rs.getInt("content_id"))
             			.title(rs.getString("title"))
             			.addr1(rs.getString("addr1"))
             			.zipcode(rs.getString("zipcode"))
