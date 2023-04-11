@@ -7,6 +7,7 @@ import com.ssafy.ltw.domain.attraction.model.Gugun;
 import com.ssafy.ltw.domain.member.model.Member;
 import com.ssafy.ltw.domain.member.model.service.MemberService;
 import com.ssafy.ltw.domain.member.model.service.MemberServiceImpl;
+import com.ssafy.ltw.domain.myattraction.model.dto.MyAttractionDto;
 import com.ssafy.ltw.domain.myattraction.model.service.MyAttractionService;
 import com.ssafy.ltw.domain.myattraction.model.service.MyAttractionServiceImpl;
 import com.ssafy.ltw.global.util.validation.ParameterCheck;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
 
-@WebServlet("/attraction")
+@WebServlet("/myattraction")
 public class MyAttractionController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -39,9 +40,10 @@ public class MyAttractionController extends HttpServlet {
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-
+        System.out.println(action);
         String path = "";
         if("like".equals(action)) {
+        	
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
             boolean like = changeLike(request,response);
@@ -49,18 +51,49 @@ public class MyAttractionController extends HttpServlet {
             String result = objectMapper.writeValueAsString(like);
             response.getWriter().write(result);
         }
+        else if("list".equals(action)) {
+        	path = list(request,response);
+        	forward(request,response, path);
+        } else if ("find".equals(action)) {
+        	path = find(request, response);
+        }
         else {
             redirect(request, response, path);
         }
     }
 
-    private boolean changeLike(HttpServletRequest request, HttpServletResponse response) {
+    private String find(HttpServletRequest request, HttpServletResponse response) {
+    	//TODO: 최단 경로 찾아서 반환하는 로직 구현 
+		return null;
+	}
+	private String list(HttpServletRequest request, HttpServletResponse response) {
+    	System.out.println("list");
+    	HttpSession session = request.getSession();
+    	Member member = (Member) session.getAttribute("userinfo");
+    	if(member != null) {
+    		// 해당 id의 모든 장소 정보를 가져오기
+    		long memberId;
+			try {
+				memberId = memberService.findIdByUserId(member.getLoginId());
+				List<MyAttractionDto> list = myAttractionService.listMyAttraction(memberId);
+				System.out.println(list);
+				request.setAttribute("myattractions", list);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+    		
+    	}
+    	return "/attraction/my_travel.jsp#my-travel";
+	}
+	private boolean changeLike(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("userinfo");
+        
         int contentId = Integer.parseInt(request.getParameter("contentId"));
         try {
-            return myAttractionService.changeLike(member.getId(),contentId);
+        	long memberId = memberService.findIdByUserId(member.getLoginId());
+            return myAttractionService.changeLike(memberId,contentId);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
