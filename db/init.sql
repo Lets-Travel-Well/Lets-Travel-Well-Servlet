@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS `ltw_local`.`Member` ;
 CREATE TABLE `ltw_local`.`Member` (
                                       `id`    BIGINT    NOT NULL AUTO_INCREMENT,
                                       `login_id`    VARCHAR(20)    NULL DEFAULT NULL,
-                                      `login_pw`    VARCHAR(20)    NULL DEFAULT NULL,
+                                      `login_pw`    VARCHAR(200)    NULL DEFAULT NULL,
                                       `username`    VARCHAR(20)    NULL DEFAULT NULL,
                                       `email`    VARCHAR(20)    NULL DEFAULT NULL,
                                       `phone`    VARCHAR(11)    NULL DEFAULT NULL,
@@ -43,6 +43,17 @@ CREATE TABLE `ltw_local`.`My_Attraction`
     FOREIGN KEY (member_id) REFERENCES Member (id)
 -- ERROR : 1071
 --     FOREIGN KEY (attraction_id) REFERENCES attraction_info (content_id)
+);
+
+DROP TABLE IF EXISTS `ltw_local`.`Salt`;
+
+CREATE TABLE `ltw_local`.`Salt`
+(
+    `id`        BIGINT    NOT NULL AUTO_INCREMENT,
+    `member_id` BIGINT    NOT NULL,
+    `salt`      VARCHAR(2000) NULL DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (member_id) REFERENCES Member (id)
 );
 
 INSERT INTO `ltw_local`.`member` (`login_id`, `login_pw`, `username`, `email`, `phone`) VALUES
