@@ -17,4 +17,7 @@ public class Member {
 	private String username;
 	private String email;
 	private String phone;
+	public void encryptPassword(String loginPw){
+		this.loginPw = loginPw;
+	}
 }
