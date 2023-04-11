@@ -32,9 +32,10 @@ public class MyAttractionServiceImpl implements MyAttractionService{
     }
 
     @Override
-    public List<MyAttractionDto> listMyAttraction(Long memberId, int attractionInfoId) throws Exception {
-        return null;
+    public List<MyAttractionDto> listMyAttraction(Long memberId) throws Exception {
+        return myAttractionDao.findAllByMemberId(memberId);
     }
+
 
     @Override
     public boolean isExisted(Long memberId, int attractionInfoId) throws Exception {

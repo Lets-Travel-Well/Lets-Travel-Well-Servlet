@@ -9,7 +9,7 @@ public interface MyAttractionService {
     // 좋아요로 변경 되었을 때 true
     boolean changeLike(Long memberId, int attractionInfoId) throws Exception;
     // 좋아요 한 게시물 보기
-    List<MyAttractionDto> listMyAttraction(Long memberId, int attractionInfoId) throws Exception;
+    List<MyAttractionDto> listMyAttraction(Long memberId) throws Exception;
     // 좋아요 한가 확인 => -1이면 없음 나머지는 테이블의 PK값
     boolean isExisted(Long memberId, int attractionInfoId) throws Exception;
     Long findIdByMemberAndAttractionInfo(Long memberId, int attractionInfoId) throws Exception;

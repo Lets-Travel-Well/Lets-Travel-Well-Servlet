@@ -1,6 +1,7 @@
 package com.ssafy.ltw.domain.myattraction.model.dao;
 
 import com.ssafy.ltw.domain.myattraction.model.MyAttraction;
+import com.ssafy.ltw.domain.myattraction.model.dto.MyAttractionDto;
 import com.ssafy.ltw.global.util.db.DBUtil;
 
 import java.sql.Connection;
@@ -93,28 +94,30 @@ public class MyAttractionDaoImpl implements MyAttractionDao{
     }
 
     @Override
-    public List<MyAttraction> findAllByMemberId(Long memberId) throws SQLException {
-        List<MyAttraction> list = new ArrayList<>();
+    public List<MyAttractionDto> findAllByMemberId(Long memberId) throws SQLException {
+        List<MyAttractionDto> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = dbUtil.getConnection();
             StringBuilder sql = new StringBuilder();
-            sql.append("select *\n");
-            sql.append("from My_Attraction \n");
-            sql.append("where memberId = ?");
+            sql.append("select * \n");
+            sql.append("from My_Attraction inner join attraction_info\n");
+            sql.append("on My_Attraction.attraction_id = attraction_info.content_id \n");
+            sql.append("where My_Attraction.member_id = ?");
             pstmt = conn.prepareStatement(sql.toString());
             pstmt.setLong(1, memberId);
             rs = pstmt.executeQuery();
             while (rs.next()){
-
-                MyAttraction findMyAttraction = new MyAttraction().builder()
-                        .id(rs.getLong("id"))
-                        .createdDate(rs.getString("created_date"))
-                        .modifiedDate(rs.getString("modified_date"))
-                        .memberId(rs.getLong("member_id"))
-                        .attractionInfoId(rs.getLong("attraction_id"))
+                MyAttractionDto findMyAttraction = new MyAttractionDto().builder()
+                        .attractionInfoId(rs.getInt("attraction_id"))
+                        .title(rs.getString("title"))
+                        .firstImage(rs.getString("first_image"))
+                        .addr1(rs.getString("addr1"))
+                        .zipcode(rs.getString("zipcode"))
+                        .latitude(rs.getDouble("latitude"))
+                        .longitude(rs.getDouble("longitude"))
                         .build();
                 list.add(findMyAttraction);
             }
