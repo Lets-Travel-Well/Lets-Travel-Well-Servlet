@@ -11,4 +11,6 @@ public interface MyAttractionDao {
     void removeMyAttraction(Long myAttractionId) throws SQLException;
     MyAttraction findByMemberIdAndAttractionInfoId(Long memberId, int attractionInfoId) throws SQLException;
     List<MyAttractionDto> findAllByMemberId(Long memberId) throws SQLException;
+    // TODO : KCH 구조 설계 미스
+    MyAttractionDto findById(int attractionInfoId) throws SQLException;
 }

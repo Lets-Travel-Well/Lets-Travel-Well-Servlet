@@ -13,4 +13,7 @@ public interface MyAttractionService {
     // 좋아요 한가 확인 => -1이면 없음 나머지는 테이블의 PK값
     boolean isExisted(Long memberId, int attractionInfoId) throws Exception;
     Long findIdByMemberAndAttractionInfo(Long memberId, int attractionInfoId) throws Exception;
+    MyAttractionDto findById(int attractionInfoId) throws Exception;
+    // TSP 알고리즘 적용
+    List<MyAttractionDto> findShortestPath(List<Integer> requestId) throws Exception;
 }

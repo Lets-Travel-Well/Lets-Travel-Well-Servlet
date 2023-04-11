@@ -126,4 +126,36 @@ public class MyAttractionDaoImpl implements MyAttractionDao{
         }
         return list;
     }
+
+    @Override
+    public MyAttractionDto findById(int attractionInfoId) throws SQLException {
+        MyAttractionDto findMyAttractionDto = null;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = dbUtil.getConnection();
+            StringBuilder sql = new StringBuilder();
+            sql.append("select * \n");
+            sql.append("from attraction_info\n");
+            sql.append("where content_id = ?");
+            pstmt = conn.prepareStatement(sql.toString());
+            pstmt.setInt(1, attractionInfoId);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                findMyAttractionDto = new MyAttractionDto().builder()
+                        .attractionInfoId(rs.getInt("content_id"))
+                        .title(rs.getString("title"))
+                        .firstImage(rs.getString("first_image"))
+                        .addr1(rs.getString("addr1"))
+                        .zipcode(rs.getString("zipcode"))
+                        .latitude(rs.getDouble("latitude"))
+                        .longitude(rs.getDouble("longitude"))
+                        .build();
+            }
+        } finally {
+            dbUtil.close(rs, pstmt, conn);
+        }
+        return findMyAttractionDto;
+    }
 }
