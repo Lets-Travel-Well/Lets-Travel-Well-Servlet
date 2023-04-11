@@ -16,9 +16,25 @@ Lets Travel Well 사이트의 추구하는 목적과 세부 설명을 담고 있
 
 ![여행지검색](./docs/img/search.png)
 
+- 로그인한 사용자는 여러 관광지 정보중 자신이 원하는 관광지를 scrap할 수 있습니다.
+- scrap 한 관광지 정보는 My Travel 페이지에서 조회할 수 있습니다.
+- scrap한 관광지를 scrap 취소할 수 있습니다.
+
+![여행지스크랩](./docs/img/scrap.png)
+
+## ✅ My Travle page
+
+사용자가 scrap 한 관광지 정보를 조회하며, 스크랩한 관광지들 중 최단 경로를 구할 관광지를 선택하여, 최단 경로를 조회할 수 있는 페이지입니다.
+
+- 스크랩한 관광지 정보를 조회할 수 있습니다.
+- 최단 경로를 구하기 위해 여러 관광지를 선택할 수 있습니다.
+
+![스크랩관광지조회](./docs/img/mytravel.png)
+
 ## ✅ Login Page
 
 사용자의 아이디와 비밀번호를 입력받아서 로그인 하는 페이지입니다.
+
 ![로그인](./docs/img/login.png)
 
 ## ✅ Sign Up Page
@@ -27,6 +43,8 @@ Lets Travel Well 사이트의 추구하는 목적과 세부 설명을 담고 있
 
 - 아이디의 check 버튼으로 아이디 중복 확인을 할 수 있습니다.
 - 전화번호는 Format을 지켜서 입력해야합니다.
+- 비밀번호는 입력 시 암호화되어 저장됩니다.
+
   ![회원가입](./docs/img/signup.png)
 
 ## ✅ My page
@@ -71,3 +89,8 @@ Lets Travel Well 사이트의 추구하는 목적과 세부 설명을 담고 있
 - 로그인한 사용자와 글을 작성한 사용자가 일치하면 삭제를 할 수 있습니다.
 
 ![커뮤니티수정](./docs/img/communitymodify.png)
+
+## ✅ 알고리즘 적용 기획서 모음
+
+- [최단경로 알고리즘](./FEATURE1.md)</br>
+- [암호화 알고리즘](./FEATURE2.md)
