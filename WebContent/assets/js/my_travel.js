@@ -39,7 +39,54 @@ document.getElementById("find-button").addEventListener("click",() => {
     
 });
 
-
+var overLay = [];
+var markers = [];
 function makeShortesPathToMap(data) {
-	console.log(data);
+    console.log(data);
+    markers = [];
+    data.forEach((area) => {
+        let markerInfo = {
+            contentId: area.contentId,
+            like: area.scrap,
+            title: area.title,
+            addr1: area.addr1,
+            zipcode: area.zipcode,
+            firstImage: area.firstImage,
+            latlng: new kakao.maps.LatLng(area.latitude, area.longitude),
+        }
+        let marker = new kakao.maps.Marker({
+            map: map,
+            positions: markerInfo.latlng,
+        });
+        markers.push(marker);
+    });
+        
+    for (var i = 0; i < overLay.length; i++) {
+        overLay[i].setMap(null);
+    }
+
+    overLay = [];
+    addLine(markers);
+
+
+	
+}
+
+var lines = [];
+function addLine(markers) {
+    var linePath = [];
+    for (let i = 0; i < markers.length; i++) {
+        linePath.push(markers[i].getPosition());
+    }
+
+    var polyline = new kakao.maps.polyline({
+        path: linePath,
+        strokeWeight: 2,
+        strokeColor: 'red',
+        strokeOpacity: 0.7,
+        strokeStlye: 'solid'
+    });
+
+    lines.push(polyline);
+    polyline.setMap(map);
 }
