@@ -88,12 +88,15 @@ var mapContainer = document.getElementById("map"), // 지도를 표시할 div
     level: 5, // 지도의 확대 레벨
     };
   
+
+
 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 var map = new kakao.maps.Map(mapContainer, mapOption);
-  
+
+var ovList= [];
 function displayMarker() {
   // 마커 이미지의 이미지 주소입니다
-  
+
   for (var i = 0; i < positions.length; i++) {
   
     // 마커를 생성합니다
@@ -101,11 +104,12 @@ function displayMarker() {
       map: map, // 마커를 표시할 지도
       position: positions[i].latlng, // 마커를 표시할 위치
     });
-
+    
     let content = '<div class="wrap">' + 
       '    <div class="info">' + 
       '        <div class="title">' + 
-                positions[i].title + 
+                positions[i].title +
+      '          <div class="close" onclick="closeOverlay('+i+')" title="닫기"></div>' + 
       '        </div>' + 
       '        <div class="body">' + 
       '            <div class="img">' +
@@ -126,21 +130,26 @@ function displayMarker() {
         position: marker.getPosition()       
     });
 
-    kakao.maps.event.addListener(marker, 'mouseover', function () {
+    kakao.maps.event.addListener(marker, 'click', function () {
     	overlay.setMap(map);
       });
+    ovList[i] = overlay;
 
-    kakao.maps.event.addListener(marker, 'mouseout', function () {
-      setTimeout(function () {
-    	  overlay.setMap();
-      });
-    });
+//    kakao.maps.event.addListener(marker, 'mouseout', function () {
+//      setTimeout(function () {
+//    	  overlay.setMap();
+//      });
+//    });
+
   
   }
   // 첫번째 검색 정보를 이용하여 지도 중심을 이동 시킵니다
   map.setCenter(positions[0].latlng);
 }
 
+function closeOverlay(i) {
+    ovList[i].setMap(null);     
+}
 
 
 
