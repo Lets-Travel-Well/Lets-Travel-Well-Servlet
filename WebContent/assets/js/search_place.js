@@ -55,7 +55,7 @@ document.getElementById("search-area").addEventListener("change", function () {
       }    
   
       fetch(searchUrl)
-          .then((response) => response.json())
+        .then((response) => response.json())
         .then((data) => {
           makeList(data)
         }
@@ -136,7 +136,7 @@ function displayMarker() {
     	content += '<button id="btn-scrap" class="btn btn-outline-warning d-flex justify-content-center p-1 m-2" type="button" onclick="like('+i+')"> like </button>';
     } else if(user != null && positions[i].like == true) {
     	marker.setImage(markerImage);
-    	content += '<button id="btn-scrap" class="btn btn-outline-danger d-flex justify-content-center p-1 m-2" type="button" onclick="dislike('+i+')"> dislike </button>';
+    	content += '<button id="btn-scrap" class="btn btn-outline-danger d-flex justify-content-center p-1 m-2" type="button" onclick="like('+i+')"> dislike </button>';
     }
       
     content +=     
@@ -175,21 +175,58 @@ function closeOverlay(i) {
 function like(i) {
   
 
-  var url = root + "/attraction?action=like?contentId=" + positions[i].contentId;
+  var url = root + "/myattraction?action=like&contentId=" + positions[i].contentId;
   console.log(url);
   
-  likeToUnlike(i);
-  // fetch(url)
-  //   .then((response) => response.json()) 
-  //   .then((data) => {
-  //     console.log(data);
-  //     if(data.like) {
-  //   	  likeToUnlike(i);
-  //     }
-      
-  //   })
+  //likeToUnlike(i);
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if (data == true) {
+        likeToUnlike(i);
+      } else {
+    	  unlikeToLike(i);
+      }
+    }
+  );
 }
 
+function unlikeToLike(i) {
+    markerList[i].setImage(null);
+    
+    let content = '<div class="wrap">' + 
+      '    <div class="info  shadow ">' + 
+      '        <div class="bg-primary ">' +
+      '        		<div class="text-light font-weight-bold p-1 d-flex justify-content-between">' + 
+      					        positions[i].title +
+      '         		<div class="far fa-times-circle fa-lg" onclick="closeOverlay('+i+')" title="닫기"></div>' + 
+      '        		</div>'+
+      '		   </div>' + 
+      '        <div class="body">' + 
+      '            <div class="img">' +
+      '                <img src="'+positions[i].firstImage+'" width="73" height="70">' +
+      '           </div>' + 
+      '            <div class="desc">' + 
+      '                <div class="ellipsis">'+positions[i].addr1+'</div>' + 
+      '                <div class="jibun ellipsis">(우)'+positions[i].zipcode+'</div>' +
+      '                <div class="d-flex justify-content-end">' + 
+      '				   <button id="btn-scrap" class="btn btn-outline-warning d-flex justify-content-center p-1 m-2" type="button" onclick="like('+i+')"> like </button>' +
+      '                </div>' + 
+      '            </div>' + 
+      '        </div>' + 
+      '    </div>' +    
+      '</div>';
+    
+      // 마커 위에 커스텀오버레이를 표시합니다
+    // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+    ovList[i].setContent(content);
+
+    
+//    kakao.maps.event.addListener(markerList[i], 'click', function () {
+//    	ovList[i].setMap(map);
+//    });
+}
 
 function likeToUnlike(i) {
 
@@ -213,7 +250,7 @@ function likeToUnlike(i) {
       '                <div class="ellipsis">'+positions[i].addr1+'</div>' + 
       '                <div class="jibun ellipsis">(우)'+positions[i].zipcode+'</div>' +
       '                <div class="d-flex justify-content-end">' + 
-      '				   <button id="btn-scrap" class="btn btn-outline-danger d-flex justify-content-center p-1 m-2" type="button" onclick="dislike('+i+')"> dislike </button>' +
+      '				   <button id="btn-scrap" class="btn btn-outline-danger d-flex justify-content-center p-1 m-2" type="button" onclick="like('+i+')"> dislike </button>' +
       '                </div>' + 
       '            </div>' + 
       '        </div>' + 
@@ -225,9 +262,9 @@ function likeToUnlike(i) {
     ovList[i].setContent(content);
 
     
-    kakao.maps.event.addListener(markerList[i], 'click', function () {
-    	ovList[i].setMap(map);
-    });
+//    kakao.maps.event.addListener(markerList[i], 'click', function () {
+//    	ovList[i].setMap(map);
+//    });
 
 }
 

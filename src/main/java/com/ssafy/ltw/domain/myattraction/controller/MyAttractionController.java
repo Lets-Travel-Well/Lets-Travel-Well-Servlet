@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
 
-@WebServlet("/attraction")
+@WebServlet("/myattraction")
 public class MyAttractionController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -39,9 +39,10 @@ public class MyAttractionController extends HttpServlet {
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-
+        System.out.println(action);
         String path = "";
         if("like".equals(action)) {
+        	
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
             boolean like = changeLike(request,response);
@@ -58,9 +59,11 @@ public class MyAttractionController extends HttpServlet {
 
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("userinfo");
+        
         int contentId = Integer.parseInt(request.getParameter("contentId"));
         try {
-            return myAttractionService.changeLike(member.getId(),contentId);
+        	long memberId = memberService.findIdByUserId(member.getLoginId());
+            return myAttractionService.changeLike(memberId,contentId);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
