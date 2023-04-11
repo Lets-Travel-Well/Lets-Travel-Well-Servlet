@@ -107,10 +107,12 @@ function displayMarker() {
     
     let content = '<div class="wrap">' + 
       '    <div class="info">' + 
-      '        <div class="title">' + 
-                positions[i].title +
-      '          <div class="close" onclick="closeOverlay('+i+')" title="닫기"></div>' + 
-      '        </div>' + 
+      '        <div class="bg-primary ">' +
+      '        		<div class="text-light h5 p-1 d-flex justify-content-between">' + 
+      					positions[i].title +
+      '         		<div class="far fa-times-circle fa-lg" onclick="closeOverlay('+i+')" title="닫기"></div>' + 
+      '        		</div>'+
+      '		   </div>' + 
       '        <div class="body">' + 
       '            <div class="img">' +
       '                <img src="'+positions[i].firstImage+'" width="73" height="70">' +
@@ -134,12 +136,6 @@ function displayMarker() {
     	overlay.setMap(map);
       });
     ovList[i] = overlay;
-
-//    kakao.maps.event.addListener(marker, 'mouseout', function () {
-//      setTimeout(function () {
-//    	  overlay.setMap();
-//      });
-//    });
 
   
   }
