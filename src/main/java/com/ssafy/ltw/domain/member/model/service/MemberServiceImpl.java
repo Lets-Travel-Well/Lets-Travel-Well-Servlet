@@ -41,7 +41,12 @@ public class MemberServiceImpl implements MemberService{
 	}
 	@Override
 	public Member loginMember(String loginId, String loginPw) throws Exception {
-
+		Long saveId = findIdByUserId(loginId);
+		if(saveId == -1){
+			return null;
+		}
+		String salt = saltService.findByMember(saveId).getSalt();
+		loginPw = encryptUtil.Hashing(loginPw.getBytes(), salt);
 		return memberDao.loginMember(loginId, loginPw);
 	}
 
