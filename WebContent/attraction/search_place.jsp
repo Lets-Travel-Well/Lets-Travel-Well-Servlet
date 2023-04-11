@@ -139,6 +139,7 @@
             </div>
           </div>
         </div>
+        <div id="user" style='display: none;'>${userinfo.id}</div>
       </footer>
       <!-- Footer end -->
 
