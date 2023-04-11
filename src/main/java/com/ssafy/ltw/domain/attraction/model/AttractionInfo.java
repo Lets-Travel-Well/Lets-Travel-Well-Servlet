@@ -24,6 +24,6 @@ public class AttractionInfo {
     private double latitude;
     private double longitude;
     private String mlevel;
-
-    
+    // 스크랩 되어 있는가 확인 하는 것
+    private boolean isScrap;
 }

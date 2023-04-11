@@ -10,4 +10,6 @@ public interface AttractionService {
 	List<Sido> listSido() throws Exception;
 	List<Gugun> listGugun(int sidoCod) throws Exception;
 	List<AttractionInfo> listAttractionInfoByCriterial(int contentTypeId, int sidoCode, int gugunCode) throws Exception;
+	List<AttractionInfo> listAttractionInfoByCriterial(int contentTypeId, int sidoCode, int gugunCode, Long memberId) throws Exception;
+
 }
