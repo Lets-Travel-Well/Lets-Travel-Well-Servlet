@@ -1,16 +1,10 @@
 package com.ssafy.ltw.domain.myattraction.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.ltw.domain.article.model.service.ArticleServiceImpl;
-import com.ssafy.ltw.domain.attraction.model.AttractionInfo;
-import com.ssafy.ltw.domain.attraction.model.Gugun;
-import com.ssafy.ltw.domain.member.model.Member;
-import com.ssafy.ltw.domain.member.model.service.MemberService;
-import com.ssafy.ltw.domain.member.model.service.MemberServiceImpl;
-import com.ssafy.ltw.domain.myattraction.model.dto.MyAttractionDto;
-import com.ssafy.ltw.domain.myattraction.model.service.MyAttractionService;
-import com.ssafy.ltw.domain.myattraction.model.service.MyAttractionServiceImpl;
-import com.ssafy.ltw.global.util.validation.ParameterCheck;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -20,9 +14,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.util.List;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.ltw.domain.member.model.Member;
+import com.ssafy.ltw.domain.member.model.service.MemberService;
+import com.ssafy.ltw.domain.member.model.service.MemberServiceImpl;
+import com.ssafy.ltw.domain.myattraction.model.dto.MyAttractionDto;
+import com.ssafy.ltw.domain.myattraction.model.service.MyAttractionService;
+import com.ssafy.ltw.domain.myattraction.model.service.MyAttractionServiceImpl;
 
 @WebServlet("/myattraction")
 public class MyAttractionController extends HttpServlet {
@@ -62,10 +63,43 @@ public class MyAttractionController extends HttpServlet {
         }
     }
 
-    private String find(HttpServletRequest request, HttpServletResponse response) {
+    private String find(HttpServletRequest request, HttpServletResponse response) throws IOException {
     	//TODO: 최단 경로 찾아서 반환하는 로직 구현 
-		return null;
+        String body = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader bufferedReader = null;
+ 
+        try {
+            InputStream inputStream = request.getInputStream();
+            if (inputStream != null) {
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                char[] charBuffer = new char[128];
+                int bytesRead = -1;
+                while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
+                    stringBuilder.append(charBuffer, 0, bytesRead);
+                }
+            }
+        } catch (IOException ex) {
+            throw ex;
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException ex) {
+                    throw ex;
+                }
+            }
+        }
+ 
+        body = stringBuilder.toString();
+        System.out.println("body: " + body);
+        List<Integer>  list = objectMapper.readValue(body, new TypeReference<List<Integer>>() {});
+        
+        
+        return body;
 	}
+    
+    
 	private String list(HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("list");
     	HttpSession session = request.getSession();
@@ -76,7 +110,6 @@ public class MyAttractionController extends HttpServlet {
 			try {
 				memberId = memberService.findIdByUserId(member.getLoginId());
 				List<MyAttractionDto> list = myAttractionService.listMyAttraction(memberId);
-				System.out.println(list);
 				request.setAttribute("myattractions", list);
 			} catch (Exception e) {
 				e.printStackTrace();

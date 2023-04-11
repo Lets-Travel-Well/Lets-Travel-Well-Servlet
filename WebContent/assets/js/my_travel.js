@@ -13,14 +13,28 @@ var root = "/ltw";
 
 document.getElementById("find-button").addEventListener("click",() => {
     console.log("find");
-    var url = root + "/myattraction";
+    var url = root + "/myattraction?action=find";
     console.log(url);
     let attractions = document.getElementsByName("attractionInfoIds");
     let attractionIdInfos = [];
     for (let i = 0; i < attractions.length; i++) {
         console.log(attractions[i].value);
-        attractionIdInfos[i] = attractions[i].value;
+        if(attractions[i].checked) {
+        	attractionIdInfos.push(attractions[i].value);
+        }
+        
     }
+
+    fetch(url,
+    {
+        method: "POST",
+        body: '['+attractionIdInfos+']',
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+    })
+    .then(function(res){ return res.json(); })
+    .then(function(data){ alert( JSON.stringify( data ) ) })
+
     
     
     
