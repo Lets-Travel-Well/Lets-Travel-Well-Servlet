@@ -72,6 +72,7 @@ document.getElementById("search-area").addEventListener("change", function () {
           // title, addr1, zipcode, firstImage, latitude, longitude, 
           let markerInfo = {
             contentId: area.contentId,
+            like: area.scrap,
             title: area.title,
             addr1: area.addr1,
             zipcode: area.zipcode,
@@ -95,6 +96,11 @@ var mapContainer = document.getElementById("map"), // 지도를 표시할 div
 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 var map = new kakao.maps.Map(mapContainer, mapOption);
 
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+var imageSize = new kakao.maps.Size(24, 35); 
+var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+var user = document.getElementById("user").innerText;
+
 var ovList= [];
 var markerList = [];
 function displayMarker() {
@@ -108,30 +114,41 @@ function displayMarker() {
       position: positions[i].latlng, // 마커를 표시할 위치
     });
     markerList[i] = marker; 
-    let content = '<div class="wrap">' + 
-      '    <div class="info  shadow ">' + 
-      '        <div class="bg-primary ">' +
-      '        		<div class="text-light font-weight-bold p-1 d-flex justify-content-between">' + 
-      					      positions[i].title +
-      '         		<div class="far fa-times-circle fa-lg" onclick="closeOverlay('+i+')" title="닫기"></div>' + 
-      '        		</div>'+
-      '		   </div>' + 
-      '        <div class="body">' + 
-      '            <div class="img">' +
-      '                <img src="'+positions[i].firstImage+'" width="73" height="70">' +
-      '           </div>' + 
-      '            <div class="desc">' + 
-      '                <div class="ellipsis">'+positions[i].addr1+'</div>' + 
-      '                <div class="jibun ellipsis">(우)'+positions[i].zipcode+'</div>' +
-      '                <div class="d-flex justify-content-end">' + 
-      '				   <button id="btn-scrap" class="btn btn-outline-warning d-flex justify-content-center p-1 m-2" type="button" onclick="like('+i+')"> like </button>' +
-      '                </div>' + 
-      '            </div>' + 
-      '        </div>' + 
-      '    </div>' +    
-      '</div>';
     
-      // 마커 위에 커스텀오버레이를 표시합니다
+    let content= '<div class="wrap">' + 
+    '    <div class="info  shadow ">' + 
+    '        <div class="bg-primary ">' +
+    '        		<div class="text-light font-weight-bold p-1 d-flex justify-content-between">' + 
+    					      positions[i].title +
+    '         		<div class="far fa-times-circle fa-lg" onclick="closeOverlay('+i+')" title="닫기"></div>' + 
+    '        		</div>'+
+    '		   </div>' + 
+    '        <div class="body">' + 
+    '            <div class="img">' +
+    '                <img src="'+positions[i].firstImage+'" width="73" height="70">' +
+    '           </div>' + 
+    '            <div class="desc">' + 
+    '                <div class="ellipsis">'+positions[i].addr1+'</div>' + 
+    '                <div class="jibun ellipsis">(우)'+positions[i].zipcode+'</div>' +
+    '                <div class="d-flex justify-content-end">';
+    
+    if(user != null && positions[i].like == false) {
+    	content += '<button id="btn-scrap" class="btn btn-outline-warning d-flex justify-content-center p-1 m-2" type="button" onclick="like('+i+')"> like </button>';
+    } else if(user != null && positions[i].like == true) {
+    	marker.setImage(markerImage);
+    	content += '<button id="btn-scrap" class="btn btn-outline-danger d-flex justify-content-center p-1 m-2" type="button" onclick="dislike('+i+')"> dislike </button>';
+    }
+      
+    content +=     
+    	'                </div>' + 
+    	'            </div>' + 
+    	'        </div>' + 
+    	'    </div>' +    
+    	'</div>';
+    
+    
+    
+    // 마커 위에 커스텀오버레이를 표시합니다
     // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
     let overlay = new kakao.maps.CustomOverlay({
         content: content,
@@ -157,8 +174,8 @@ function closeOverlay(i) {
 
 function like(i) {
   
-  let user = document.getElementById("user").innerText;
-  var url = root + "/attraction?action=like?userId=" + user + "&contentId=" + positions[i].contentId;
+
+  var url = root + "/attraction?action=like?contentId=" + positions[i].contentId;
   console.log(url);
   
   likeToUnlike(i);
@@ -173,9 +190,7 @@ function like(i) {
   //   })
 }
 
-var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-var imageSize = new kakao.maps.Size(24, 35); 
-var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+
 function likeToUnlike(i) {
 
 
@@ -198,7 +213,7 @@ function likeToUnlike(i) {
       '                <div class="ellipsis">'+positions[i].addr1+'</div>' + 
       '                <div class="jibun ellipsis">(우)'+positions[i].zipcode+'</div>' +
       '                <div class="d-flex justify-content-end">' + 
-      '				   <button id="btn-scrap" class="btn btn-outline-warning d-flex justify-content-center p-1 m-2" type="button" onclick="dislike('+i+')"> dislike </button>' +
+      '				   <button id="btn-scrap" class="btn btn-outline-danger d-flex justify-content-center p-1 m-2" type="button" onclick="dislike('+i+')"> dislike </button>' +
       '                </div>' + 
       '            </div>' + 
       '        </div>' + 
@@ -209,7 +224,7 @@ function likeToUnlike(i) {
     // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
     ovList[i].setContent(content);
 
-
+    
     kakao.maps.event.addListener(markerList[i], 'click', function () {
     	ovList[i].setMap(map);
     });

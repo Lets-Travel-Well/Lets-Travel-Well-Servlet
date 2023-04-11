@@ -18,11 +18,15 @@ import com.ssafy.ltw.domain.attraction.model.Gugun;
 import com.ssafy.ltw.domain.attraction.model.Sido;
 import com.ssafy.ltw.domain.attraction.model.service.AttractionService;
 import com.ssafy.ltw.domain.attraction.model.service.AttractionServiceImpl;
+import com.ssafy.ltw.domain.member.model.Member;
+import com.ssafy.ltw.domain.member.model.service.MemberService;
+import com.ssafy.ltw.domain.member.model.service.MemberServiceImpl;
 
 @WebServlet("/attraction")
 public class AttractionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private AttractionService attractionService;
+    private MemberService memberService;
     private ObjectMapper objectMapper = new ObjectMapper();
     
     public AttractionController() {
@@ -30,7 +34,9 @@ public class AttractionController extends HttpServlet {
     }
 
     public void init() {
-    	 attractionService  = AttractionServiceImpl.getAttractionService();    }
+    	 attractionService  = AttractionServiceImpl.getAttractionService();
+    	 memberService = MemberServiceImpl.getMemberService();
+    }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
@@ -66,7 +72,15 @@ public class AttractionController extends HttpServlet {
 		int contentTypeId = Integer.parseInt(request.getParameter("contentTypeId"));
 		
 		try {
-			List<AttractionInfo> list = attractionService.listAttractionInfoByCriterial(contentTypeId, sidoCode, gugunCode);
+			List<AttractionInfo> list = null;
+			if(request.getSession(false) != null && request.getSession().getAttribute("userinfo") != null ) {
+				Member member = (Member) request.getSession().getAttribute("userinfo");
+				long memberId = memberService.findIdByUserId(member.getLoginId());
+				System.out.println(member);
+				list = attractionService.listAttractionInfoByCriterial(contentTypeId, sidoCode, gugunCode,memberId);
+			} else {
+				list = attractionService.listAttractionInfoByCriterial(contentTypeId, sidoCode, gugunCode);
+			}
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
