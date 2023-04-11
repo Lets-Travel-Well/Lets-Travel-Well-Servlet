@@ -33,9 +33,13 @@ document.getElementById("find-button").addEventListener("click",() => {
         contentType: 'application/json; charset=utf-8',
     })
     .then(function(res){ return res.json(); })
-    .then(function(data){ alert( JSON.stringify( data ) ) })
-
-    
-    
+    .then( (data) => {
+    	makeShortesPathToMap(data)
+    });
     
 });
+
+
+function makeShortesPathToMap(data) {
+	console.log(data);
+}

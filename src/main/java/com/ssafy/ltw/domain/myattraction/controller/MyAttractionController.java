@@ -56,14 +56,18 @@ public class MyAttractionController extends HttpServlet {
         	path = list(request,response);
         	forward(request,response, path);
         } else if ("find".equals(action)) {
-        	path = find(request, response);
+        	List<MyAttractionDto> list = find(request, response);
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("utf-8");
+        	String result = objectMapper.writeValueAsString(list);
+        	response.getWriter().write(result);
         }
         else {
             redirect(request, response, path);
         }
     }
 
-    private String find(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private List<MyAttractionDto> find(HttpServletRequest request, HttpServletResponse response) throws IOException {
     	//TODO: 최단 경로 찾아서 반환하는 로직 구현 
         String body = null;
         StringBuilder stringBuilder = new StringBuilder();
@@ -92,11 +96,16 @@ public class MyAttractionController extends HttpServlet {
         }
  
         body = stringBuilder.toString();
-        System.out.println("body: " + body);
         List<Integer>  list = objectMapper.readValue(body, new TypeReference<List<Integer>>() {});
+        List<MyAttractionDto> attractions = null;
+        try {
+			attractions = myAttractionService.findShortestPath(list);
+			System.out.println(attractions.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         
-        
-        return body;
+        return attractions;
 	}
     
     
