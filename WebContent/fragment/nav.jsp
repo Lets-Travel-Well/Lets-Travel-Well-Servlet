@@ -16,7 +16,7 @@
 		  </c:if>
 		  <c:if test="${not empty userinfo}">
           	<li class="nav-item">
-          	  <a class="nav-link" href="${root}/attraction/my_travel.jsp#my-travel">My Travel</a>
+          	  <a class="nav-link" href="${root}/myattraction?action=list">My Travel</a>
           	</li>
             <li class="nav-item">
                 <a class="nav-link" href="${root}/article?action=list#article-list-section">Community</a>

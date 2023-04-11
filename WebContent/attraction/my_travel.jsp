@@ -70,7 +70,8 @@
 	            <!-- kakao map start -->
 	            <div class="col">
 					<div class = "h3"> Shortest Path </div>
-	            	<div id="map" class="mt-3 shadow" style="width: 100%; height: 600px"></div>
+					<p class="text-secondary">최단 경로를 확인해보세요.</p>
+	            	<div id="map" class="mt-3 shadow" style="width: 100%; height: 800px"></div>
 	            </div>
 				<!-- kakao map end -->
             	
@@ -78,21 +79,32 @@
             	<div class = "col "> 
             		<div class = "h3"> LIKE Place </div>
             		<p class="text-secondary">최단 경로를 구할 여행지를 선택해주세요.</p>
-            		<div  class="overflow-auto" style="width: 100%; height: 600px">  
+         			<div class="row mt-3"> 
+         				<div class="h4 col-4 mb-2 text-primary font-weight-bold">IMAGE </div>
+         				<div class="h4 col-3 mb-2 text-primary font-weight-bold"> TITLE </div>
+         				<div class="h4 col-4 mb-2 text-primary font-weight-bold"> ADDRESS </div>
+         			</div>
+            		
             		
             		<!--  사용자가 선택한 정보 리스트 조회 : ajax => data 조회  -->
-            			<div class="card m-3">
+            		<form id='check-shortest-path'>
+            		<div  class="overflow-auto" style="width: 100%; height: 700px">  
+            		<input type='hidden' name='action' value='find' />
+            			<div class="m-3 border border-primary rounded">
+            				<c:forEach items="${myattractions}" var="attraction">
             				<div class="card-body row"> 
-            					<div class="col-2"> Image </div>
-            					<div class="col-2"> Name </div>
-            					<div class="col-4"> Address </div>
-            					<div class="col-3"> Zipcode </div>
-            					<input type="checkbox" class="mt-1 col-1" id="choose-button" style="width: 20px; height: 20px;"></input>	
-            				</div> 
+            					<img class="col-4 mb-2" src="${attraction.firstImage}">
+            					<div class="col-3 mb-2"> ${attraction.title } </div>
+            					<div class="col-4 mb-2"> ${attraction.addr1 } </div>
+            					<input type="checkbox" class="mt-1 col-1" name="attractionInfoIds" style="width: 20px; height: 20px;" value="${attraction.attractionInfoId}"></input>	
+            				</div>
+            				</c:forEach> 
             			</div>   
-              				
-            		 </div> 
-            		
+            		</div> 
+            	    <button type="button" class="mt-3 btn btn-primary btn-lg" id="find-button">
+                            Find
+                  </button>
+              		</form>
             	</div>
             	
             </div>
