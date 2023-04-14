@@ -132,9 +132,9 @@ function displayMarker() {
     '                <div class="jibun ellipsis">(우)'+positions[i].zipcode+'</div>' +
     '                <div class="d-flex justify-content-end">';
     
-    if(user != null && positions[i].like == false) {
+    if(user != "" && positions[i].like == false) {
     	content += '<button id="btn-scrap" class="btn btn-outline-warning d-flex justify-content-center p-1 m-2" type="button" onclick="like('+i+')"> like </button>';
-    } else if(user != null && positions[i].like == true) {
+    } else if(user != "" && positions[i].like == true) {
     	marker.setImage(markerImage);
     	content += '<button id="btn-scrap" class="btn btn-outline-danger d-flex justify-content-center p-1 m-2" type="button" onclick="like('+i+')"> dislike </button>';
     }
