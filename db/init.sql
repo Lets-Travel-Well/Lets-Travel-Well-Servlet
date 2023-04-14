@@ -38,11 +38,11 @@ CREATE TABLE `ltw_local`.`My_Attraction`
     `created_date`          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `modified_date`         TIMESTAMP NULL DEFAULT NULL,
     `member_id`             BIGINT    NOT NULL,
-    `attraction_id`    VARCHAR(2000) NULL DEFAULT NULL,
+    `attraction_id`         int NULL DEFAULT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (member_id) REFERENCES Member (id)
+    FOREIGN KEY (member_id) REFERENCES Member (id),
 -- ERROR : 1071
---     FOREIGN KEY (attraction_id) REFERENCES attraction_info (content_id)
+    FOREIGN KEY (attraction_id) REFERENCES attraction_info (content_id)
 );
 
 DROP TABLE IF EXISTS `ltw_local`.`Salt`;
@@ -55,8 +55,3 @@ CREATE TABLE `ltw_local`.`Salt`
     PRIMARY KEY (`id`),
     FOREIGN KEY (member_id) REFERENCES Member (id)
 );
-
-INSERT INTO `ltw_local`.`member` (`login_id`, `login_pw`, `username`, `email`, `phone`) VALUES
-                                                                                            ('qwe', 'qwe', 'kcc', 'test1@tes.com', '01012341234'),
-                                                                                            ('ssafy', '1234','김싸피', 'ssafy@ssafy.com', '01012341234'),
-                                                                                            ('admin', '1234','관리자', 'admin@google.com', '01000000000');
